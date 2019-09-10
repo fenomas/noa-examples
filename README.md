@@ -5,7 +5,7 @@ Two small example worlds built on the [noa](https://github.com/andyhall/noa) vox
 
 Live demos:
  * [hello-world](https://andyhall.github.io/noa-examples/hello-world/) - a bare minimum world, suitable for building on top of
- * [test](https://andyhall.github.io/noa-examples/test/) - a testbed world where I debug engine features
+ * [test](https://andyhall.github.io/noa-examples/test/) - a testbed world that minimally implements most engine features
 
 
 ## Usage
