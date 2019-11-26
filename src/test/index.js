@@ -24,7 +24,7 @@ var noa = new Engine({
     inverseY: true,
     inverseX: false,
     chunkSize: 32,
-    chunkAddDistance: 2.5,
+    chunkAddDistance: 1.5,
     chunkRemoveDistance: 3.5,
     blockTestDistance: 50,
     texturePath: 'textures/',

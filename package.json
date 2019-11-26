@@ -21,6 +21,7 @@
   "license": "ISC",
   "dependencies": {
     "@babylonjs/core": "^4.0.3",
+    "@babylonjs/inspector": "^4.0.3",
     "noa-engine": "github:andyhall/noa#develop",
     "voxel-crunch": "^0.2.1"
   },

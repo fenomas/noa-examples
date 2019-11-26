@@ -1,6 +1,9 @@
 
 
 import { shootBouncyBall } from './entities'
+import '@babylonjs/core/Debug/debugLayer'
+import '@babylonjs/inspector'
+
 
 /*
  * 
@@ -64,6 +67,18 @@ export function setupInteractions(noa) {
             if (noa.camera.zoomDistance > 10) noa.camera.zoomDistance = 10
         }
     })
+
+
+    // launch Babylon debug layer when pressing "Z"
+    var debug = false
+    var scene = noa.rendering.getScene()
+    noa.inputs.bind('debug', 'Z')
+    noa.inputs.down.on('debug', () => {
+        debug = !debug
+        if (debug) scene.debugLayer.show()
+        else scene.debugLayer.hide()
+    })
+
 
 }
 
