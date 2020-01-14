@@ -17,7 +17,9 @@ export function initRegistration(noa) {
     // block materials
     var brownish = [0.45, 0.36, 0.22]
     var greenish = [0.1, 0.8, 0.2]
+    var greenish2 = [0.1, 0.6, 0.2]
     noa.registry.registerMaterial('grass', greenish, null)
+    noa.registry.registerMaterial('grass2', greenish2, null)
     noa.registry.registerMaterial('dirt', brownish, null, false)
     var strs = ['a', 'b', 'c', 'd', '1', '2']
     for (var i = 0; i < 6; i++) {
@@ -55,6 +57,7 @@ export function initRegistration(noa) {
     blockIDs.dirtID = noa.registry.registerBlock(_id++, { material: 'dirt' })
     blockIDs.shinyDirtID = noa.registry.registerBlock(_id++, { material: 'shinyDirt' })
     blockIDs.grassID = noa.registry.registerBlock(_id++, { material: 'grass' })
+    blockIDs.grass2ID = noa.registry.registerBlock(_id++, { material: 'grass2' })
     blockIDs.testID1 = noa.registry.registerBlock(_id++, { material: ['b', 'd', '1', '2', 'c', 'a'] })
     blockIDs.testID2 = noa.registry.registerBlock(_id++, {
         material: ['tb', 'td', 't1', 't2', 'tc', 'ta'],

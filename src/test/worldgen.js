@@ -9,64 +9,66 @@
 */
 
 // this module implements two "worlds" of voxel data
-var currentWorld = 'world1'
-
-// FIFO queue of worldgen requests from the engine,
-var worldgenRequestQueue = []
+var WORLD1 = 'world1'
+var WORLD2 = 'world2'
 
 // storage for data from voxels that were unloaded
 var cruncher = require('voxel-crunch')
 var storage = {}
+var chunkIsStored = (id) => { return !!storage[id] }
+var storeChunk = (id, arr) => { storage[id] = cruncher.encode(arr.data) }
+var retrieveChunk = (id, arr) => { cruncher.decode(storage[id], arr.data) }
+
+
 
 
 
 export function initWorldGen(noa, blockIDs) {
 
-    // add a binding to swap "worlds"
+    // init world name and add binding to swap it    
+    noa.worldName = WORLD1
     noa.inputs.bind('swap-world', 'O')
     noa.inputs.down.on('swap-world', function () {
-        currentWorld = (currentWorld === 'world1') ? 'world2' : 'world1'
-        noa.world.invalidateAllChunks()
+        noa.worldName = (noa.worldName === WORLD1) ? WORLD2 : WORLD1
     })
 
 
-    // store worldgen requests from the engine
-    noa.world.on('worldDataNeeded', function (id, array, x, y, z) {
-        worldgenRequestQueue.push({ id, array, x, y, z })
-    })
-
-    // store data from chunks being unloaded
+    // catch engine's chunk removal event, and store the data
     noa.world.on('chunkBeingRemoved', function (id, array, userData) {
-        var storageID = userData
-        storage[storageID] = cruncher.encode(array.data)
+        storeChunk(id, array)
     })
 
-    // process the queue asynchronously
+
+    // catch worldgen requests, and queue them to handle asynchronously
+    var requestQueue = []
+    noa.world.on('worldDataNeeded', function (id, array, x, y, z, worldName) {
+        requestQueue.push({ id, array, x, y, z, worldName })
+    })
+
+
+
+    // process the worldgen request queue:
     setInterval(function () {
-        if (worldgenRequestQueue.length === 0) return
-        var req = worldgenRequestQueue.shift()
-        var storageID = `${req.id}:${currentWorld}`
-        if (storage[storageID]) {
-            // fill in chunk ndarray from storage
-            cruncher.decode(storage[storageID], req.array.data)
-            storage[storageID] = null
+        if (requestQueue.length === 0) return
+        var req = requestQueue.shift()
+        if (chunkIsStored(req.id)) {
+            retrieveChunk(req.id, req.array)
         } else {
-            // generate a new chunk of voxel data
-            if (currentWorld === 'world1') {
-                generateChunk1(req.array, req.x, req.y, req.z)
-            } else {
-                generateChunk2(req.array, req.x, req.y, req.z)
-            }
+            generateChunk(req.array, req.x, req.y, req.z, req.worldName)
         }
         // pass the finished data back to the game engine
-        noa.world.setChunkData(req.id, req.array, storageID)
-    }, 30)
+        noa.world.setChunkData(req.id, req.array)
+    }, 10)
 
 
 
 
-    // two functions to generate world data
+    // two versions of world data
     // `data` is an ndarray - see https://github.com/scijs/ndarray
+    function generateChunk(array, x, y, z, worldName) {
+        if (worldName === WORLD1) generateChunk1(array, x, y, z)
+        if (worldName === WORLD2) generateChunk2(array, x, y, z)
+    }
 
     function generateChunk1(array, x, y, z) {
         for (var i = 0; i < array.shape[0]; ++i) {
@@ -86,11 +88,16 @@ export function initWorldGen(noa, blockIDs) {
                 var height = getHeightMap(x + i, z + k, 20, 40)
                 for (var j = 0; j < array.shape[1]; ++j) {
                     var b = decideBlock(x + i, y + j, z + k, height)
+                    if (b === blockIDs.grassID) b = blockIDs.grass2ID
                     if (b) array.set(i, j, k, b)
                 }
             }
         }
     }
+
+
+
+
 
     // helpers
 
