@@ -5,8 +5,8 @@
   "scripts": {
     "start": "cd src/hello-world && webpack-dev-server",
     "test": "cd src/test && webpack-dev-server",
-    "build1": "cd src/test && webpack --env.production",
-    "build2": "cd src/hello-world && webpack --env.production",
+    "build1": "rm docs/test/*.js; cd src/test && webpack --env.production",
+    "build2": "rm docs/hello-world/*.js; cd src/hello-world && webpack --env.production",
     "build": "npm run build1 && npm run build2"
   },
   "keywords": [

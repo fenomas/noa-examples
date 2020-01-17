@@ -2,7 +2,6 @@
 
 import { shootBouncyBall } from './entities'
 import '@babylonjs/core/Debug/debugLayer'
-import '@babylonjs/inspector'
 
 
 /*
@@ -74,12 +73,14 @@ export function setupInteractions(noa) {
     var scene = noa.rendering.getScene()
     noa.inputs.bind('debug', 'Z')
     noa.inputs.down.on('debug', () => {
-        debug = !debug
-        if (debug) scene.debugLayer.show()
-        else scene.debugLayer.hide()
+        // inspector is very heavy, so load it via dynamic import
+        import('@babylonjs/inspector').then(data => {
+            debug = !debug
+            if (debug) scene.debugLayer.show()
+            else scene.debugLayer.hide()
+        })
     })
 
 
 }
-
 

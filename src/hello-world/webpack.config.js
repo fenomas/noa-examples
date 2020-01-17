@@ -1,4 +1,4 @@
-'use strict'
+
 
 var path = require('path')
 var buildPath = path.resolve('..', '..', 'docs', 'hello-world')
@@ -34,10 +34,29 @@ module.exports = (env) => ({
         path: buildPath,
         filename: 'bundle.js',
     },
+    stats: {
+        modules: false,
+    },
     devServer: {
         contentBase: buildPath,
         inline: true,
         host: "0.0.0.0",
         stats: "minimal",
+    },
+    watchOptions: {
+        aggregateTimeout: 500,
+        poll: 1000,
+        ignored: ["node_modules"],
+    },
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                babylon: {
+                    chunks: 'initial',
+                    test: /babylonjs/,
+                    filename: 'babylon.js',
+                },
+            },
+        },
     },
 })
