@@ -37,6 +37,7 @@ module.exports = (env) => ({
     stats: {
         modules: false,
     },
+    devtool: 'source-map',
     devServer: {
         contentBase: buildPath,
         inline: true,
