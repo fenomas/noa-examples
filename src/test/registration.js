@@ -76,6 +76,13 @@ export function initRegistration(noa) {
         },
     })
 
+    blockIDs.waterPole = noa.registry.registerBlock(_id++, {
+        blockMesh: mesh,
+        solid: true,
+        opaque: false,
+        material: 'water',
+        fluid: true,
+    })
 
     return blockIDs
 }

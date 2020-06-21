@@ -138,6 +138,10 @@ export function initWorldGen(noa, blockIDs) {
         noa.setBlock(blockIDs.testID2, -4, 5, 6)
         noa.setBlock(blockIDs.testID3, -2, 5, 6)
 
+        noa.setBlock(blockIDs.waterPole, -18, -1, 6)
+        noa.setBlock(blockIDs.waterPole, -16, -1, 6)
+        noa.setBlock(blockIDs.waterPole, -14, -1, 6)
+
         var z = 5
         makeRows(10, 5, z, blockIDs.shinyDirtID)
         makeRows(10, 5, z + 2, blockIDs.dirtID)
