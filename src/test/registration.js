@@ -28,11 +28,20 @@ export function initRegistration(noa) {
         noa.registry.registerMaterial('t' + s, null, 't' + s + '.png', true)
     }
     noa.registry.registerMaterial('water', [0.5, 0.5, 0.8, 0.7], null)
+    noa.registry.registerMaterial('water2', [0.5, 0.5, 0.8, 0.7], null)
 
+    
 
     // do some Babylon.js stuff with the scene, materials, etc.
     var scene = noa.rendering.getScene()
 
+    // register a block material with a transparent texture
+    // noa.registry.registerMaterial('window', brownish, 'window.png', true)
+
+    var tmat = noa.rendering.makeStandardMaterial('')
+    tmat.diffuseTexture = new Texture('textures/window.png', scene)
+    tmat.opacityTexture = tmat.diffuseTexture
+    noa.registry.registerMaterial('window', null, null, false, tmat)
 
     // register a shinyDirt block with a custom render material
     var shinyMat = noa.rendering.makeStandardMaterial('shinyDirtMat')
@@ -59,6 +68,10 @@ export function initRegistration(noa) {
     blockIDs.grassID = noa.registry.registerBlock(_id++, { material: 'grass' })
     blockIDs.grass2ID = noa.registry.registerBlock(_id++, { material: 'grass2' })
     blockIDs.testID1 = noa.registry.registerBlock(_id++, { material: ['b', 'd', '1', '2', 'c', 'a'] })
+    blockIDs.windowID = noa.registry.registerBlock(_id++, {
+        material: 'window',
+        opaque: false,
+    })
     blockIDs.testID2 = noa.registry.registerBlock(_id++, {
         material: ['tb', 'td', 't1', 't2', 'tc', 'ta'],
         opaque: false,
@@ -66,6 +79,10 @@ export function initRegistration(noa) {
     blockIDs.testID3 = noa.registry.registerBlock(_id++, { material: ['1', '2', 'a'] })
     blockIDs.waterID = noa.registry.registerBlock(_id++, {
         material: 'water',
+        fluid: true
+    })
+    blockIDs.water2ID = noa.registry.registerBlock(_id++, {
+        material: 'water2',
         fluid: true
     })
     blockIDs.customID = noa.registry.registerBlock(_id++, {
@@ -83,6 +100,45 @@ export function initRegistration(noa) {
         material: 'water',
         fluid: true,
     })
+
+
+
+    var make = (s) => {
+        var testMat = noa.rendering.makeStandardMaterial('')
+        testMat.backFaceCulling = false
+        testMat.diffuseTexture = new Texture('textures/' + s + '.png')
+        testMat.diffuseTexture.hasAlpha = true
+        window.t = testMat
+
+        var testMesh = Mesh.CreatePlane('cross', 1, scene)
+        testMesh.material = testMat
+        testMesh.rotation.x += Math.PI
+        testMesh.rotation.y += Math.PI / 4
+        let offset = Matrix.Translation(0, -0.5, 0)
+        testMesh.bakeTransformIntoVertices(offset)
+        let clone = testMesh.clone()
+        clone.rotation.y += Math.PI / 2
+        var result = Mesh.MergeMeshes([testMesh, clone], true)
+        return result
+    }
+
+    blockIDs.testa = noa.registry.registerBlock(_id++, {
+        blockMesh: make('ta'),
+        opaque: false,
+    })
+
+    blockIDs.testb = noa.registry.registerBlock(_id++, {
+        blockMesh: make('tb'),
+        opaque: false,
+    })
+
+    blockIDs.testc = noa.registry.registerBlock(_id++, {
+        blockMesh: make('tc'),
+        opaque: false,
+    })
+
+
+
 
     return blockIDs
 }

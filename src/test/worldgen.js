@@ -119,7 +119,9 @@ export function initWorldGen(noa, blockIDs) {
         if (y < height) {
             return (y < 0) ? blockIDs.dirtID : blockIDs.grassID
         } else {
-            return (y < 1) ? blockIDs.waterID : 0
+            if (y >= 1) return 0
+            // alternate by depth between two different water IDs
+            return (y % 2) ? blockIDs.waterID : blockIDs.water2ID
         }
     }
 
@@ -137,6 +139,14 @@ export function initWorldGen(noa, blockIDs) {
         noa.setBlock(blockIDs.testID1, -6, 5, 6)
         noa.setBlock(blockIDs.testID2, -4, 5, 6)
         noa.setBlock(blockIDs.testID3, -2, 5, 6)
+
+        noa.setBlock(blockIDs.windowID, -5, 3, 6)
+        noa.setBlock(blockIDs.windowID, -4, 3, 6)
+        noa.setBlock(blockIDs.windowID, -3, 3, 6)
+
+        noa.setBlock(blockIDs.testa, -6, 4, 6)
+        noa.setBlock(blockIDs.testb, -5, 4, 6)
+        noa.setBlock(blockIDs.testc, -4, 4, 6)
 
         noa.setBlock(blockIDs.waterPole, -18, -1, 6)
         noa.setBlock(blockIDs.waterPole, -16, -1, 6)
