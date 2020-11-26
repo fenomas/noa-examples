@@ -1,5 +1,4 @@
 
-
 var path = require('path')
 var buildPath = path.resolve('..', '..', 'docs', 'hello-world')
 
@@ -7,33 +6,30 @@ var buildPath = path.resolve('..', '..', 'docs', 'hello-world')
 
 module.exports = (env) => ({
 
-    mode: (() => {
-        return (env && env.production) ?
-            'production' : 'development'
-    })(),
+    mode: (env && env.prod) ? 'production' : 'development',
 
     entry: './index.js',
-    resolve: {
-
-        /*
-         * Note: this next setting is only necessary if the project declares 
-         * a dependency on `noa-engine` via the local file system. 
-         * If you pull in `noa-engine` normally from npm or from a 
-         * github link then this setting shouldn't be necessary 
-         * (though I don't think it breaks anything..)
-        */
-        symlinks: false,
-
+    output: {
+        path: buildPath,
+        filename: 'bundle.js',
     },
+
+    resolve: {
+        /* This resolve is necessary when importing noa-engine from the 
+         * local filesystem in order to hack on it. 
+         * (but it shouldn't break anything when importing noa normally)
+        */
+        alias: {
+            '@babylonjs': path.resolve('../../node_modules/@babylonjs'),
+        },
+    },
+
     performance: {
         // change the default size warnings
         maxEntrypointSize: 1.5e6,
         maxAssetSize: 1.5e6,
     },
-    output: {
-        path: buildPath,
-        filename: 'bundle.js',
-    },
+
     stats: {
         modules: false,
     },
@@ -44,11 +40,13 @@ module.exports = (env) => ({
         host: "0.0.0.0",
         stats: "minimal",
     },
+    // make the dev server's polling use less CPU :/
     watchOptions: {
         aggregateTimeout: 500,
         poll: 1000,
         ignored: ["node_modules"],
     },
+    // split out babylon to a separate bundle (since it rarely changes)
     optimization: {
         splitChunks: {
             cacheGroups: {

@@ -1,12 +1,12 @@
 {
   "name": "noa-examples",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Starter examples of game worlds using the noa voxel engine",
   "scripts": {
-    "start": "cd src/hello-world && webpack-dev-server",
-    "test": "cd src/test && webpack-dev-server",
-    "build1": "rm docs/test/*.js; cd src/test && webpack --env.production",
-    "build2": "rm docs/hello-world/*.js; cd src/hello-world && webpack --env.production",
+    "start": "cd src/hello-world && webpack serve",
+    "test": "cd src/test && webpack serve",
+    "build1": "rm -f docs/test/*.js*; cd src/test && webpack --env prod",
+    "build2": "rm -f docs/hello-world/*.js*; cd src/hello-world && webpack --env prod",
     "build": "npm run build1 && npm run build2"
   },
   "keywords": [
@@ -19,15 +19,19 @@
   ],
   "author": "Andy Hall",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andyhall/noa-examples.git"
+  },
   "dependencies": {
-    "@babylonjs/core": "^4.0.3",
-    "@babylonjs/inspector": "^4.0.3",
+    "@babylonjs/core": "^4.2.0",
+    "@babylonjs/inspector": "^4.2.0",
     "noa-engine": "github:andyhall/noa#develop",
     "voxel-crunch": "^0.2.1"
   },
   "devDependencies": {
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.12",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^4.2.0",
     "webpack-dev-server": "^3.11.0"
   }
 }
