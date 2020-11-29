@@ -1,7 +1,8 @@
 
-import { Texture } from '@babylonjs/core/Materials/Textures'
-import { Mesh } from '@babylonjs/core/Meshes/mesh'
+import { Texture } from '@babylonjs/core/Materials/Textures/texture'
 import { Vector3, Matrix } from '@babylonjs/core/Maths/math'
+import { Mesh } from '@babylonjs/core/Meshes/mesh'
+import '@babylonjs/core/Meshes/Builders/boxBuilder'
 
 
 
@@ -30,7 +31,7 @@ export function initRegistration(noa) {
     noa.registry.registerMaterial('water', [0.5, 0.5, 0.8, 0.7], null)
     noa.registry.registerMaterial('water2', [0.5, 0.5, 0.8, 0.7], null)
 
-    
+
 
     // do some Babylon.js stuff with the scene, materials, etc.
     var scene = noa.rendering.getScene()

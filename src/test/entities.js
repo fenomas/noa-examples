@@ -1,6 +1,8 @@
 
 
 import { Mesh } from '@babylonjs/core/Meshes/mesh'
+import '@babylonjs/core/Meshes/Builders/boxBuilder'
+import '@babylonjs/core/Meshes/Builders/sphereBuilder'
 
 
 /*

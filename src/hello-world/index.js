@@ -106,9 +106,10 @@ var dat = noa.entities.getPositionData(player)
 var w = dat.width
 var h = dat.height
 
-
 // add a mesh to represent the player, and scale it, etc.
 import { Mesh } from '@babylonjs/core/Meshes/mesh'
+import '@babylonjs/core/Meshes/Builders/boxBuilder'
+
 var scene = noa.rendering.getScene()
 var mesh = Mesh.CreateBox('player-mesh', 1, scene)
 mesh.scaling.x = w
