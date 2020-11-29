@@ -38,9 +38,13 @@ The `noa` engine is under active development, so this module declares its depend
 
 ### When hacking on the engine:
 
-If you want to hack on both the engine and a game world side-by-side, the easiest way is to clone the `noa` repo next to this one, and change this module's dependency to point at `"file:../noa"` or whatever. However there is some [weirdness with how webpack resolves peer dependencies on the local file system](https://medium.com/@penx/managing-dependencies-in-a-node-package-so-that-they-are-compatible-with-npm-link-61befa5aaca7). 
+If you want to hack on both the engine and a game world side-by-side, just clone the `noa` repo next to your game client then import it directly:
 
-The fix for this is to include `symlinks: false` in your webpack config. This is already done in this repo, but if you start from scratch and get build errors, that's the reason.
+```js
+import Engine from '../../noa' // or wherever
+```
+
+This is preferable to editing your client's `package.json` or using `npm link`, as npm behaves weirdly when trying to resolve peer dependencies via path references or symlinks.
 
 ----
 
