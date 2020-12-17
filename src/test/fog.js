@@ -1,4 +1,4 @@
-export function setupFog(fogMode, fogDensity, fogStart, fogEnd, fogColor){
+export function setupFog(noa, fogMode, fogDensity, fogStart, fogEnd, fogColor){
   var BABYLON = require("@babylonjs/core/Legacy/legacy")
   var scene = noa.rendering.getScene()
   scene.fogMode = fogMode
