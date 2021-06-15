@@ -1,6 +1,6 @@
 {
   "name": "noa-examples",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "Starter examples of game worlds using the noa voxel engine",
   "scripts": {
     "start": "cd src/hello-world && webpack serve",
@@ -26,12 +26,12 @@
   "dependencies": {
     "@babylonjs/core": "^4.2.0",
     "@babylonjs/inspector": "^4.2.0",
-    "noa-engine": "github:andyhall/noa#develop",
+    "noa-engine": "^0.30.0",
     "voxel-crunch": "^0.2.1"
   },
   "devDependencies": {
-    "webpack": "^4.44.2",
-    "webpack-cli": "^4.2.0",
-    "webpack-dev-server": "^3.11.0"
+    "webpack": "^5.39.0",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2"
   }
 }

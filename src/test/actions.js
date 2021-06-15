@@ -15,14 +15,20 @@ export function setupInteractions(noa) {
 
     // on left mouse, set targeted block to be air
     noa.inputs.down.on('fire', function () {
-        if (noa.targetedBlock) noa.setBlock(0, noa.targetedBlock.position)
+        if (noa.targetedBlock) {
+            var pos = noa.targetedBlock.position
+            noa.setBlock(0, pos[0], pos[1], pos[2])
+        }
     })
 
 
     // place block on alt-fire (RMB/E)
     var pickedID = 1
     noa.inputs.down.on('alt-fire', function () {
-        if (noa.targetedBlock) noa.addBlock(pickedID, noa.targetedBlock.adjacent)
+        if (noa.targetedBlock) {
+            var pos = noa.targetedBlock.adjacent
+            noa.addBlock(pickedID, pos[0], pos[1], pos[2])
+        }
     })
 
 

@@ -53,7 +53,7 @@ export function initRegistration(noa) {
 
 
     // object block mesh
-    var mesh = Mesh.CreateBox('b', 1, scene)
+    var mesh = Mesh.CreateBox('post', 1, scene)
     var mat = Matrix.Scaling(0.2, 1, 0.2)
     mat.setTranslation(new Vector3(0, 0.5, 0))
     mesh.bakeTransformIntoVertices(mat)
@@ -111,7 +111,7 @@ export function initRegistration(noa) {
         testMat.diffuseTexture.hasAlpha = true
         window.t = testMat
 
-        var testMesh = Mesh.CreatePlane('cross', 1, scene)
+        var testMesh = Mesh.CreatePlane('cross:' + s, 1, scene)
         testMesh.material = testMat
         testMesh.rotation.x += Math.PI
         testMesh.rotation.y += Math.PI / 4

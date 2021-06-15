@@ -12,10 +12,10 @@
 
 
 // Engine options object, and engine instantiation:
-import Engine from 'noa-engine'
+import { Engine } from 'noa-engine'
 
 // or import from local filesystem when hacking locally:
-// import Engine from '/Users/andy/dev/game/noa'
+// import { Engine } from '../../../noa'
 
 
 var opts = {
@@ -137,12 +137,18 @@ noa.entities.addComponent(player, noa.entities.names.mesh, {
 
 // clear targeted block on on left click
 noa.inputs.down.on('fire', function () {
-    if (noa.targetedBlock) noa.setBlock(0, noa.targetedBlock.position)
+    if (noa.targetedBlock) {
+        var pos = noa.targetedBlock.position
+        noa.setBlock(0, pos[0], pos[1], pos[2])
+    }
 })
 
 // place some grass on right click
 noa.inputs.down.on('alt-fire', function () {
-    if (noa.targetedBlock) noa.addBlock(grassID, noa.targetedBlock.adjacent)
+    if (noa.targetedBlock) {
+        var pos = noa.targetedBlock.adjacent
+        noa.setBlock(grassID, pos[0], pos[1], pos[2])
+    }
 })
 
 // add a key binding for "E" to do the same as alt-fire

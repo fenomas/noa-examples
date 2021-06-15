@@ -10,16 +10,17 @@
 
 
 // Engine options object, and engine instantiation:
-import Engine from 'noa-engine'
+import { Engine } from 'noa-engine'
 
 // or import from local filesystem when hacking locally:
-// import Engine from '/Users/andy/dev/game/noa'
+// import { Engine } from '../../../noa'
 
 
 import { initRegistration } from './registration'
 import { initWorldGen } from './worldgen'
 import { setupPlayerEntity } from './entities'
 import { setupInteractions } from './actions'
+
 
 
 
@@ -30,8 +31,7 @@ var noa = new Engine({
     inverseY: true,
     inverseX: false,
     chunkSize: 32,
-    chunkAddDistance: 3.5,
-    chunkRemoveDistance: 3.0,
+    chunkAddDistance: [1.2, 1],     // [horiz, vert]
     blockTestDistance: 50,
     texturePath: 'textures/',
     playerStart: [0.5, 5, 0.5],
@@ -42,6 +42,7 @@ var noa = new Engine({
     AOmultipliers: [0.92, 0.8, 0.5],
     reverseAOmultiplier: 1.0,
     manuallyControlChunkLoading: false,
+    originRebaseDistance: 25,
 })
 
 

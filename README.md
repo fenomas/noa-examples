@@ -1,12 +1,13 @@
 
 # noa-examples
 
-Two small example worlds built on the [noa](https://github.com/andyhall/noa) voxel engine.
+Two small example worlds built on the [noa](https://github.com/andyhall/noa) voxel engine. The easiest way to get started with `noa` is to clone this repo and hack on these demos.
 
 Live demos:
  * [hello-world](https://andyhall.github.io/noa-examples/hello-world/) - a bare minimum world, suitable for building on top of
  * [test](https://andyhall.github.io/noa-examples/test/) - a testbed world that minimally implements most engine features
 
+Note: those using React may want to refer to [@MCArth/noa-cra-example](https://github.com/MCArth/noa-cra-example), which is a ported noa example built with `create-react-app`.
 
 ## Usage
 
@@ -34,14 +35,20 @@ There's also a `build` script to generate bundles into the `docs` directories.
 
 ### noa dependency:
 
-The `noa` engine is under active development, so this module declares its dependency directly on the source repo's develop branch (`github:andyhall/noa#develop`), so as to pull in the latest bleeding-edge build. If you want to hack on something stable you may want to change the dependency to `noa-engine` (to get the current stable build from npm), or a specific `noa` version/commit/etc.
+The `noa` engine is under active development. This module pulls in the latest release (`v0.30.0`), but if you want the lastest stable (probably!) version, change your dependency in `package.json` to:
 
-### When hacking on the engine:
+```json
+    "noa-engine": "github:andyhall/noa#develop",
+```
 
-If you want to hack on both the engine and a game world side-by-side, just clone the `noa` repo next to your game client then import it directly:
+and you'll get the latest version of the #develop branch, where new feature work is done.
+
+### When hacking on both a game and on the engine:
+
+If you want to hack on both the engine and a game world side-by-side, clone the `noa` repo next to your game client then import it directly:
 
 ```js
-import Engine from '../../noa' // or wherever
+import { Engine } from '../../noa' // or wherever
 ```
 
 This is preferable to editing your client's `package.json` or using `npm link`, as npm behaves weirdly when trying to resolve peer dependencies via path references or symlinks.
@@ -50,6 +57,6 @@ This is preferable to editing your client's `package.json` or using `npm link`, 
 
 ## Credits
 
-Made by [@fenomas](https://twitter.com/fenomas), license is ISC.
+Made with 🍺 by [@fenomas](https://twitter.com/fenomas), license is ISC.
 
 
