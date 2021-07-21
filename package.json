@@ -21,7 +21,7 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://github.com/andyhall/noa-examples.git"
+    "url": "https://github.com/fenomas/noa-examples.git"
   },
   "dependencies": {
     "@babylonjs/core": "^4.2.0",

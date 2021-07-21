@@ -1,11 +1,11 @@
 
 # noa-examples
 
-Two small example worlds built on the [noa](https://github.com/andyhall/noa) voxel engine. The easiest way to get started with `noa` is to clone this repo and hack on these demos.
+Two small example worlds built on the [noa](https://github.com/fenomas/noa) voxel engine. The easiest way to get started with `noa` is to clone this repo and hack on these demos.
 
 Live demos:
- * [hello-world](https://andyhall.github.io/noa-examples/hello-world/) - a bare minimum world, suitable for building on top of
- * [test](https://andyhall.github.io/noa-examples/test/) - a testbed world that minimally implements most engine features
+ * [hello-world](https://fenomas.github.io/noa-examples/hello-world/) - a bare minimum world, suitable for building on top of
+ * [test](https://fenomas.github.io/noa-examples/test/) - a testbed world that minimally implements most engine features
 
 Note: those using React may want to refer to [@MCArth/noa-cra-example](https://github.com/MCArth/noa-cra-example), which is a ported noa example built with `create-react-app`.
 
@@ -38,7 +38,7 @@ There's also a `build` script to generate bundles into the `docs` directories.
 The `noa` engine is under active development. This module pulls in the latest release (`v0.30.0`), but if you want the lastest stable (probably!) version, change your dependency in `package.json` to:
 
 ```json
-    "noa-engine": "github:andyhall/noa#develop",
+    "noa-engine": "github:fenomas/noa#develop",
 ```
 
 and you'll get the latest version of the #develop branch, where new feature work is done.
