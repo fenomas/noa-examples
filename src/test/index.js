@@ -31,7 +31,7 @@ var noa = new Engine({
     inverseY: true,
     inverseX: false,
     chunkSize: 32,
-    chunkAddDistance: [1.2, 1],     // [horiz, vert]
+    chunkAddDistance: [2, 1.5],     // [horiz, vert]
     blockTestDistance: 50,
     texturePath: 'textures/',
     playerStart: [0.5, 5, 0.5],

@@ -1,7 +1,6 @@
 
 
 import { shootBouncyBall } from './entities'
-import '@babylonjs/core/Debug/debugLayer'
 
 
 /*
@@ -11,6 +10,7 @@ import '@babylonjs/core/Debug/debugLayer'
 */
 
 
+/** @param {import("noa-engine").Engine} noa */
 export function setupInteractions(noa) {
 
     // on left mouse, set targeted block to be air
@@ -47,6 +47,15 @@ export function setupInteractions(noa) {
     var paused = false
 
 
+
+    // invert mouse (I)
+    noa.inputs.bind('invert-mouse', 'I')
+    noa.inputs.down.on('invert-mouse', function () {
+        noa.camera.inverseY = !noa.camera.inverseY
+    })
+
+
+
     // shoot a bouncy ball (1)
     noa.inputs.bind('shoot', '1')
     var shoot = () => shootBouncyBall(noa)
@@ -63,6 +72,16 @@ export function setupInteractions(noa) {
     })
 
 
+
+    // testing timeScale
+    var speed = 0
+    noa.inputs.bind('slow', '3')
+    noa.inputs.down.on('slow', () => {
+        noa.timeScale = [1, 0.1, 2][(++speed) % 3]
+    })
+
+
+
     // each tick, consume any scroll events and use them to zoom camera
     noa.on('tick', function (dt) {
         var scroll = noa.inputs.state.scrolly
@@ -73,19 +92,6 @@ export function setupInteractions(noa) {
         }
     })
 
-
-    // launch Babylon debug layer when pressing "Z"
-    var debug = false
-    var scene = noa.rendering.getScene()
-    noa.inputs.bind('debug', 'Z')
-    noa.inputs.down.on('debug', () => {
-        // inspector is very heavy, so load it via dynamic import
-        import('@babylonjs/inspector').then(data => {
-            debug = !debug
-            if (debug) scene.debugLayer.show()
-            else scene.debugLayer.hide()
-        })
-    })
 
 
 }

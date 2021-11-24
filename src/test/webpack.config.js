@@ -30,15 +30,11 @@ module.exports = (env) => ({
         maxAssetSize: 1.5e6,
     },
 
-    stats: {
-        modules: false,
-    },
+    stats: 'minimal',
+
     devtool: 'source-map',
     devServer: {
-        contentBase: buildPath,
-        inline: true,
-        host: "0.0.0.0",
-        stats: "minimal",
+        static: buildPath,
     },
     // make the dev server's polling use less CPU :/
     watchOptions: {
