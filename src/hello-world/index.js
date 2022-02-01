@@ -152,12 +152,12 @@ noa.inputs.down.on('alt-fire', function () {
 })
 
 // add a key binding for "E" to do the same as alt-fire
-noa.inputs.bind('alt-fire', 'E')
+noa.inputs.bind('alt-fire', 'KeyE')
 
 
 // each tick, consume any scroll events and use them to zoom camera
 noa.on('tick', function (dt) {
-    var scroll = noa.inputs.state.scrolly
+    var scroll = noa.inputs.pointerState.scrolly
     if (scroll !== 0) {
         noa.camera.zoomDistance += (scroll > 0) ? 1 : -1
         if (noa.camera.zoomDistance < 0) noa.camera.zoomDistance = 0

@@ -27,7 +27,7 @@ export function initWorldGen(noa, blockIDs) {
 
     // init world name and add binding to swap it    
     noa.worldName = WORLD1
-    noa.inputs.bind('swap-world', 'O')
+    noa.inputs.bind('swap-world', 'KeyO')
     noa.inputs.down.on('swap-world', function () {
         noa.worldName = (noa.worldName === WORLD1) ? WORLD2 : WORLD1
     })

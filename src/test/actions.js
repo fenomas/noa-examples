@@ -39,7 +39,7 @@ export function setupInteractions(noa) {
 
 
     // pause (P)
-    noa.inputs.bind('pause', 'P')
+    noa.inputs.bind('pause', 'KeyP')
     noa.inputs.down.on('pause', function () {
         paused = !paused
         noa.setPaused(paused)
@@ -49,7 +49,7 @@ export function setupInteractions(noa) {
 
 
     // invert mouse (I)
-    noa.inputs.bind('invert-mouse', 'I')
+    noa.inputs.bind('invert-mouse', 'KeyI')
     noa.inputs.down.on('invert-mouse', function () {
         noa.camera.inverseY = !noa.camera.inverseY
     })
@@ -57,7 +57,7 @@ export function setupInteractions(noa) {
 
 
     // shoot a bouncy ball (1)
-    noa.inputs.bind('shoot', '1')
+    noa.inputs.bind('shoot', 'Digit1')
     var shoot = () => shootBouncyBall(noa)
     var interval, timeout
     noa.inputs.down.on('shoot', function () {
@@ -75,7 +75,7 @@ export function setupInteractions(noa) {
 
     // testing timeScale
     var speed = 0
-    noa.inputs.bind('slow', '3')
+    noa.inputs.bind('slow', 'Digit3')
     noa.inputs.down.on('slow', () => {
         noa.timeScale = [1, 0.1, 2][(++speed) % 3]
     })
@@ -84,7 +84,7 @@ export function setupInteractions(noa) {
 
     // each tick, consume any scroll events and use them to zoom camera
     noa.on('tick', function (dt) {
-        var scroll = noa.inputs.state.scrolly
+        var scroll = noa.inputs.pointerState.scrolly
         if (scroll !== 0) {
             noa.camera.zoomDistance += (scroll > 0) ? 1 : -1
             if (noa.camera.zoomDistance < 0) noa.camera.zoomDistance = 0
