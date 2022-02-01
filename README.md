@@ -48,7 +48,7 @@ Note: those using React may want to refer to [@MCArth/noa-cra-example](https://g
 
 ### noa dependency:
 
-The `noa` engine is under active development. This module pulls in the latest release (`v0.31.0`), but if you want the lastest stable (probably!) version, change your dependency in `package.json` to:
+The `noa` engine is under active development. This module pulls in the latest release, but if you want the lastest stable (probably!) version, change your dependency in `package.json` to:
 
 ```json
     "noa-engine": "github:fenomas/noa#develop",
