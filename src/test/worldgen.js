@@ -70,13 +70,24 @@ export function initWorldGen(noa, blockIDs) {
         if (worldName === WORLD2) generateChunk2(array, x, y, z)
     }
 
-    function generateChunk1(array, x, y, z) {
+    function generateChunk1(array, cx, cy, cz) {
         for (var i = 0; i < array.shape[0]; ++i) {
+            var x = cx + i
             for (var k = 0; k < array.shape[2]; ++k) {
-                var height = getHeightMap(x + i, z + k, 10, 30)
+                var z = cz + k
+                var height = getHeightMap(x, z, 10, 25)
                 for (var j = 0; j < array.shape[1]; ++j) {
-                    var b = decideBlock(x + i, y + j, z + k, height)
+                    var b = decideBlock(x, cy + j, z, height)
                     if (b) array.set(i, j, k, b)
+                }
+                var cloudHt = getCloudHt(x, z, 20, 30)
+                if (cloudHt > 0) {
+                    var cmin = cloudHt - 2 * Math.sin(x / 17)
+                    var cmax = cloudHt + 3 * Math.sin(z / 22)
+                    for (j = 0; j < array.shape[1]; ++j) {
+                        if (cy + j < cmin || cy + j > cmax) continue
+                        array.set(i, j, k, blockIDs.cloudID)
+                    }
                 }
             }
         }
@@ -105,7 +116,17 @@ export function initWorldGen(noa, blockIDs) {
     function getHeightMap(x, z, xsize, zsize) {
         var xs = 0.8 + 2 * Math.sin(x / xsize)
         var zs = 0.4 + 2 * Math.sin(z / zsize + x / 30)
+        var hs = Math.sin(27 + x / 37)
+        hs += Math.sin(23 + z / 33)
+        if (hs > 1.7) xs += 8 * (hs - 1.7)
         return xs + zs
+    }
+
+    function getCloudHt(x, z, xsize, zsize) {
+        var xs = 5 + 5 * Math.sin(5 + x / xsize)
+        var zs = 6 + 4 * Math.sin(8 + z / zsize + x / 35)
+        var ss = 3 + 7 * Math.sin((x + z) / 17)
+        return (xs + zs + ss > 20) ? 35 : -1
     }
 
     function decideBlock(x, y, z, height) {

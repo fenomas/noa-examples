@@ -58,3 +58,12 @@ setupPlayerEntity(noa)
 // does stuff on button presses
 setupInteractions(noa)
 
+
+// for stress testing
+window['setViewDistance'] = (blocks = 100) => {
+    blocks = (blocks < 50) ? 50 : (blocks > 5000) ? 5000 : blocks
+    var xDist = Math.max(1.5, blocks / noa.world._chunkSize)
+    var yDist = Math.max(1.5, 0.5 * xDist)
+    noa.world.setAddRemoveDistance([xDist, yDist], [xDist + 1, yDist + 1])
+}
+

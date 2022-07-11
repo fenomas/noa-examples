@@ -19,9 +19,11 @@ export function initRegistration(noa) {
     var brownish = [0.45, 0.36, 0.22]
     var greenish = [0.1, 0.8, 0.2]
     var greenish2 = [0.1, 0.6, 0.2]
+    var whitish = [0.9, 0.9, 0.92]
     noa.registry.registerMaterial('grass', greenish, null)
     noa.registry.registerMaterial('grass2', greenish2, null)
     noa.registry.registerMaterial('dirt', brownish, null, false)
+    noa.registry.registerMaterial('cloud', whitish, null)
     var strs = ['a', 'b', 'c', 'd', '1', '2']
     for (var i = 0; i < 6; i++) {
         var s = strs[i]
@@ -68,6 +70,7 @@ export function initRegistration(noa) {
     blockIDs.shinyDirtID = noa.registry.registerBlock(_id++, { material: 'shinyDirt' })
     blockIDs.grassID = noa.registry.registerBlock(_id++, { material: 'grass' })
     blockIDs.grass2ID = noa.registry.registerBlock(_id++, { material: 'grass2' })
+    blockIDs.cloudID = noa.registry.registerBlock(_id++, { material: 'cloud' })
     blockIDs.testID1 = noa.registry.registerBlock(_id++, { material: ['b', 'd', '1', '2', 'c', 'a'] })
     blockIDs.windowID = noa.registry.registerBlock(_id++, {
         material: 'window',
@@ -109,7 +112,6 @@ export function initRegistration(noa) {
         testMat.backFaceCulling = false
         testMat.diffuseTexture = new Texture('textures/' + s + '.png')
         testMat.diffuseTexture.hasAlpha = true
-        window.t = testMat
 
         var testMesh = Mesh.CreatePlane('cross:' + s, 1, scene)
         testMesh.material = testMat
