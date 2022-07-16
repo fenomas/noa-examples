@@ -1,0 +1,13 @@
+/*!
+ * Determine if an object is a Buffer
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
+/*!
+ * ent-comp: a light, *fast* Entity Component System in JS
+ * @url      github.com/andyhall/ent-comp
+ * @author   Andy Hall <andy@fenomas.com>
+ * @license  MIT
+*/
