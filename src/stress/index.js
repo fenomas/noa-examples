@@ -7,7 +7,9 @@
  * 
 */
 
-import { Engine } from '../../../noa'
+import { Engine } from 'noa-engine'
+// import { Engine } from '../../../noa'
+
 var noa = new Engine({
     debug: true,
     showFPS: true,

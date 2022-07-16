@@ -5,9 +5,10 @@ Two small example worlds built on the [noa](https://github.com/fenomas/noa) voxe
 
 Live demos:
  * [hello-world](https://fenomas.github.io/noa-examples/hello-world/) - a bare minimum world, suitable for building on top of
- * [test](https://fenomas.github.io/noa-examples/test/) - a testbed world that minimally implements most engine features
+ * [testbed](https://fenomas.github.io/noa-examples/test/) - a testbed world that minimally implements most engine features
+ * [stress test](https://fenomas.github.io/noa-examples/stress/) - a demo made to test longer view distances with more complicated terrain
 
-Interactions in the "Test" demo:
+Interactions in the **"Testbed"** demo:
  * `LMB`: break blocks
  * `RMB`/`R`: make blocks (pick block type with `MMB`/`Q`)
  * `I`: invert mouse

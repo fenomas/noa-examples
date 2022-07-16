@@ -6,10 +6,10 @@
 */
 
 // normally import from the module
-// import { Engine } from 'noa-engine'
+import { Engine } from 'noa-engine'
 
-// ...or import from local filesystem when hacking locally:
-import { Engine } from '../../../noa'
+// or import from local filesystem when hacking locally:
+// import { Engine } from '../../../noa'
 
 
 // options and instantiation
