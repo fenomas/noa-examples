@@ -12,10 +12,10 @@
 
 
 // Engine options object, and engine instantiation:
-import { Engine } from 'noa-engine'
+// import { Engine } from 'noa-engine'
 
 // or import from local filesystem when hacking locally:
-// import { Engine } from '../../../noa'
+import { Engine } from '../../../noa'
 
 
 var opts = {
@@ -41,11 +41,11 @@ var noa = new Engine(opts)
 */
 
 // block materials (just colors for this demo)
-var textureURL = null // replace that with a filename to specify textures
 var brownish = [0.45, 0.36, 0.22]
 var greenish = [0.1, 0.8, 0.2]
-noa.registry.registerMaterial('dirt', brownish, textureURL)
-noa.registry.registerMaterial('grass', greenish, textureURL)
+noa.registry.registerMaterial('dirt', { color: brownish })
+noa.registry.registerMaterial('grass', { color: greenish })
+
 
 // block types and their material names
 var dirtID = noa.registry.registerBlock(1, { material: 'dirt' })

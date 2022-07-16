@@ -1,6 +1,6 @@
 
 var path = require('path')
-var buildPath = path.resolve('..', '..', 'docs', 'hello-world')
+var buildPath = path.resolve('..', '..', 'docs', 'stress')
 
 
 
@@ -30,13 +30,12 @@ module.exports = (env) => ({
         maxAssetSize: 2.5e6,
     },
 
-    stats: "minimal",
+    stats: 'minimal',
 
     devtool: 'source-map',
     devServer: {
         static: buildPath,
     },
-
     // make the dev server's polling use less CPU :/
     watchOptions: {
         aggregateTimeout: 500,

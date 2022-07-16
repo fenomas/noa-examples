@@ -2,148 +2,189 @@
 import { Texture } from '@babylonjs/core/Materials/Textures/texture'
 import { Vector3, Matrix } from '@babylonjs/core/Maths/math'
 import { Mesh } from '@babylonjs/core/Meshes/mesh'
-import '@babylonjs/core/Meshes/Builders/boxBuilder'
+import { CreateBox } from '@babylonjs/core/Meshes/Builders/boxBuilder'
+import { CreatePlane } from '@babylonjs/core/Meshes/Builders/planeBuilder'
 
-
+import { noa } from './engine'
+export var blockIDs = {}
 
 
 /*
  * 
- *		Register a bunch of blocks and materials and whatnot
+ *		Register a bunch of block types and expose their voxel IDs
  * 
 */
 
-export function initRegistration(noa) {
+var scene = noa.rendering.getScene()
+var reg = noa.registry
 
-    // block materials
-    var brownish = [0.45, 0.36, 0.22]
-    var greenish = [0.1, 0.8, 0.2]
-    var greenish2 = [0.1, 0.6, 0.2]
-    var whitish = [0.9, 0.9, 0.92]
-    noa.registry.registerMaterial('grass', greenish, null)
-    noa.registry.registerMaterial('grass2', greenish2, null)
-    noa.registry.registerMaterial('dirt', brownish, null, false)
-    noa.registry.registerMaterial('cloud', whitish, null)
-    var strs = ['a', 'b', 'c', 'd', '1', '2']
-    for (var i = 0; i < 6; i++) {
-        var s = strs[i]
-        noa.registry.registerMaterial(s, null, s + '.png')
-        noa.registry.registerMaterial('t' + s, null, 't' + s + '.png', true)
-    }
-    noa.registry.registerMaterial('water', [0.5, 0.5, 0.8, 0.7], null)
-    noa.registry.registerMaterial('water2', [0.5, 0.5, 0.8, 0.7], null)
+// counter to increment for unique block ids
+var _id = 1
 
 
 
-    // do some Babylon.js stuff with the scene, materials, etc.
-    var scene = noa.rendering.getScene()
+/**
+ * 
+ *      Some basic block types
+ * 
+*/
 
-    // register a block material with a transparent texture
-    // noa.registry.registerMaterial('window', brownish, 'window.png', true)
+// blocks that just have a color, with no texture
+reg.registerMaterial('greenish', { color: [0.2, 0.5, 0.2] })
+reg.registerMaterial('cloud', { color: [0.9, 0.9, 0.92] })
 
-    var tmat = noa.rendering.makeStandardMaterial('')
-    tmat.diffuseTexture = new Texture('textures/window.png', scene)
-    tmat.opacityTexture = tmat.diffuseTexture
-    noa.registry.registerMaterial('window', null, null, false, tmat)
-
-    // register a shinyDirt block with a custom render material
-    var shinyMat = noa.rendering.makeStandardMaterial('shinyDirtMat')
-    shinyMat.specularColor.copyFromFloats(1, 1, 1)
-    shinyMat.specularPower = 32
-    shinyMat.bumpTexture = new Texture('textures/stone.png', scene)
-    noa.registry.registerMaterial('shinyDirt', brownish, null, false, shinyMat)
+blockIDs.green = reg.registerBlock(_id++, { material: 'greenish' })
+blockIDs.cloud = reg.registerBlock(_id++, { material: 'cloud' })
 
 
-    // object block mesh
-    var mesh = Mesh.CreateBox('post', 1, scene)
-    var mat = Matrix.Scaling(0.2, 1, 0.2)
-    mat.setTranslation(new Vector3(0, 0.5, 0))
-    mesh.bakeTransformIntoVertices(mat)
-    scene.removeMesh(mesh)
-
-
-    // block types registration
-    var blockIDs = {}
-    var _id = 1
-
-    blockIDs.dirtID = noa.registry.registerBlock(_id++, { material: 'dirt' })
-    blockIDs.shinyDirtID = noa.registry.registerBlock(_id++, { material: 'shinyDirt' })
-    blockIDs.grassID = noa.registry.registerBlock(_id++, { material: 'grass' })
-    blockIDs.grass2ID = noa.registry.registerBlock(_id++, { material: 'grass2' })
-    blockIDs.cloudID = noa.registry.registerBlock(_id++, { material: 'cloud' })
-    blockIDs.testID1 = noa.registry.registerBlock(_id++, { material: ['b', 'd', '1', '2', 'c', 'a'] })
-    blockIDs.windowID = noa.registry.registerBlock(_id++, {
-        material: 'window',
-        opaque: false,
-    })
-    blockIDs.testID2 = noa.registry.registerBlock(_id++, {
-        material: ['tb', 'td', 't1', 't2', 'tc', 'ta'],
-        opaque: false,
-    })
-    blockIDs.testID3 = noa.registry.registerBlock(_id++, { material: ['1', '2', 'a'] })
-    blockIDs.waterID = noa.registry.registerBlock(_id++, {
-        material: 'water',
-        fluid: true
-    })
-    blockIDs.water2ID = noa.registry.registerBlock(_id++, {
-        material: 'water2',
-        fluid: true
-    })
-    blockIDs.customID = noa.registry.registerBlock(_id++, {
-        blockMesh: mesh,
-        opaque: false,
-        onCustomMeshCreate: function (mesh, x, y, z) {
-            mesh.rotation.y = ((x + 0.234) * 1.234 + (z + 0.567) * 6.78) % (2 * Math.PI)
-        },
-    })
-
-    blockIDs.waterPole = noa.registry.registerBlock(_id++, {
-        blockMesh: mesh,
-        solid: true,
-        opaque: false,
-        material: 'water',
-        fluid: true,
-    })
+// a solid block with a texture
+reg.registerMaterial('stone', { textureURL: 'stone.png' })
+blockIDs.stone = reg.registerBlock(_id++, { material: 'stone' })
 
 
 
-    var make = (s) => {
-        var testMat = noa.rendering.makeStandardMaterial('')
-        testMat.backFaceCulling = false
-        testMat.diffuseTexture = new Texture('textures/' + s + '.png')
-        testMat.diffuseTexture.hasAlpha = true
+// blocks with different materials on different block faces
+reg.registerMaterial('a', { textureURL: 'a.png' })
+reg.registerMaterial('b', { textureURL: 'b.png' })
+reg.registerMaterial('c', { textureURL: 'c.png' })
 
-        var testMesh = Mesh.CreatePlane('cross:' + s, 1, scene)
-        testMesh.material = testMat
-        testMesh.rotation.x += Math.PI
-        testMesh.rotation.y += Math.PI / 4
-        let offset = Matrix.Translation(0, -0.5, 0)
-        testMesh.bakeTransformIntoVertices(offset)
-        let clone = testMesh.clone()
-        clone.rotation.y += Math.PI / 2
-        var result = Mesh.MergeMeshes([testMesh, clone], true)
-        return result
-    }
+blockIDs.abc1 = reg.registerBlock(_id++, {
+    material: ['a', 'b'],  // top/bottom, sides
+})
+blockIDs.abc2 = reg.registerBlock(_id++, {
+    material: ['a', 'b', 'c'],  // top, bottom, sides
+})
+blockIDs.abc3 = reg.registerBlock(_id++, {
+    material: ['a', 'b', 'c', 'a', 'b', 'c',],  // -x, +x, -y, +y, -z, +z
+})
 
-    blockIDs.testa = noa.registry.registerBlock(_id++, {
-        blockMesh: make('ta'),
-        opaque: false,
-    })
 
-    blockIDs.testb = noa.registry.registerBlock(_id++, {
-        blockMesh: make('tb'),
-        opaque: false,
-    })
 
-    blockIDs.testc = noa.registry.registerBlock(_id++, {
-        blockMesh: make('tc'),
-        opaque: false,
-    })
+// blocks with textures drawn from a (vertical strip) texture atlas
+// NOTE: it's recommended to have all your terrain textures in a 
+// single atlas, if possible
+var textureURL = 'terrain_atlas.png'
+reg.registerMaterial('grass', { textureURL, atlasIndex: 0 })
+reg.registerMaterial('gside', { textureURL, atlasIndex: 1 })
+reg.registerMaterial('dirt', { textureURL, atlasIndex: 2 })
+reg.registerMaterial('stone', { textureURL, atlasIndex: 3 })
+
+blockIDs.dirt = reg.registerBlock(_id++, { material: 'dirt' })
+blockIDs.grass = reg.registerBlock(_id++, { material: ['grass', 'dirt', 'gside'] })
+blockIDs.stone = reg.registerBlock(_id++, { material: 'stone' })
+
+
+
+// specify texHasAlpha for partially transparent textures
+// (i.e. each texture pixel is either fully opaque or fully transparent)
+// note the voxel is declared as non-opaque, meaning that it doesn't 
+// fully obscure the face of voxels next to it
+reg.registerMaterial('t1', { textureURL: 't1.png', texHasAlpha: true })
+reg.registerMaterial('t2', { textureURL: 't2.png', texHasAlpha: true })
+
+blockIDs.transparent = reg.registerBlock(_id++, {
+    material: ['t1', 't2'],
+    opaque: false,
+})
+
+
+
+// atlas textures may also have partial transparency
+textureURL = 'trans_atlas.png'
+var texHasAlpha = true
+reg.registerMaterial('stonea', { textureURL, texHasAlpha, atlasIndex: 0 })
+reg.registerMaterial('stonec', { textureURL, texHasAlpha, atlasIndex: 2 })
+reg.registerMaterial('stonee', { textureURL, texHasAlpha, atlasIndex: 4 })
+blockIDs.stoneTrans = reg.registerBlock(_id++, {
+    material: ['stonea', 'stonee', 'stonec'],
+    opaque: false
+})
 
 
 
 
-    return blockIDs
+// blocks with a color and no texture can have a fractional alpha,
+// but currently this may composite strangely
+reg.registerMaterial('water', { color: [0.5, 0.5, 0.8, 0.7] })
+blockIDs.water = reg.registerBlock(_id++, {
+    material: 'water',
+    fluid: true,
+})
+
+
+
+
+// you can also specify your own Babylon material for a block material
+var shinyMat = noa.rendering.makeStandardMaterial('shinyDirtMat')
+shinyMat.specularColor.copyFromFloats(1, 1, 1)
+shinyMat.specularPower = 32
+shinyMat.bumpTexture = new Texture('textures/stone.png', scene)
+reg.registerMaterial('shinyDirt', {
+    color: [0.45, 0.36, 0.22],
+    renderMaterial: shinyMat,
+})
+blockIDs.shinyDirt = reg.registerBlock(_id++, { material: 'shinyDirt' })
+
+
+
+// finally, you can register a custom Babylon mesh to represent a voxel
+var poleMesh = CreateBox('pole', {}, scene)
+var xform = Matrix.Scaling(0.2, 1, 0.2)
+xform.setTranslation(new Vector3(0, 0.5, 0))
+poleMesh.bakeTransformIntoVertices(xform)
+scene.removeMesh(poleMesh)
+blockIDs.pole = reg.registerBlock(_id++, {
+    blockMesh: poleMesh,
+    opaque: false,
+    onCustomMeshCreate: function (poleMesh, x, y, z) {
+        poleMesh.rotation.y = 123.456 * (x + 32 * z) % (6.28)
+    },
+})
+
+
+// second version of the custom block, but underwater
+blockIDs.waterPole = reg.registerBlock(_id++, {
+    blockMesh: poleMesh,
+    solid: true,
+    opaque: false,
+    material: 'water',
+    fluid: true,
+})
+
+
+
+// Another custom block to test custom meshes with transparent textures
+var make = (s) => {
+    var testMat = noa.rendering.makeStandardMaterial('voxel_trans_' + s)
+    testMat.backFaceCulling = false
+    testMat.diffuseTexture = new Texture(`textures/${s}.png`)
+    testMat.diffuseTexture.hasAlpha = true
+
+    var testMesh = CreatePlane('cross', {}, scene)
+    testMesh.material = testMat
+    testMesh.rotation.y += Math.PI / 4
+    testMesh.bakeTransformIntoVertices(Matrix.Translation(0, 0.5, 0))
+    var clone = testMesh.clone()
+    clone.rotation.y += Math.PI / 2
+    var result = Mesh.MergeMeshes([testMesh, clone], true)
+    return result
 }
+blockIDs.custom1 = reg.registerBlock(_id++, { blockMesh: make('t1'), opaque: false, })
+blockIDs.custom2 = reg.registerBlock(_id++, { blockMesh: make('t2'), opaque: false, })
+
+
+
+// terrain blocks with full alpha channels (i.e. texture pixels that are
+// partially transparent) don't really currently work, but you can 
+// hack them out like this. Note that they may composite strangely.
+var tmat = noa.rendering.makeStandardMaterial('windowMat')
+tmat.diffuseTexture = new Texture('textures/window.png', scene)
+tmat.opacityTexture = tmat.diffuseTexture
+
+reg.registerMaterial('window', { renderMaterial: tmat })
+blockIDs.window = reg.registerBlock(_id++, {
+    material: 'window',
+    opaque: false,
+})
 
 

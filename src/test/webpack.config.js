@@ -26,8 +26,8 @@ module.exports = (env) => ({
 
     performance: {
         // change the default size warnings
-        maxEntrypointSize: 1.5e6,
-        maxAssetSize: 1.5e6,
+        maxEntrypointSize: 2.5e6,
+        maxAssetSize: 2.5e6,
     },
 
     stats: 'minimal',
