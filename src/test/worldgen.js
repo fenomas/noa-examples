@@ -149,7 +149,7 @@ function decideBlock(x, y, z, height) {
     // flat area to NE
     if (x > 0 && z > 0) {
         var h = 1
-        if (z == 63 || x == 63) h = 20
+        if (z == 40 || x == 40) h = 20
         if (y >= h) return 0
         if (y < 0) return blockIDs.stone
         return blockIDs.green
@@ -185,24 +185,37 @@ function addWorldFeatures() {
     noa.setBlock(blockIDs.waterPole, -16, -1, 15)
     noa.setBlock(blockIDs.waterPole, -14, -1, 15)
 
-    var z = 5
-    makeRows(10, 5, z, blockIDs.shinyDirt)
-    makeRows(10, 5, z + 2, blockIDs.dirt)
-    makeRows(10, 5, z + 5, blockIDs.dirt)
-    makeRows(10, 5, z + 9, blockIDs.dirt)
-    makeRows(10, 5, z + 14, blockIDs.dirt)
-    z += 18
-    makeRows(10, 5, z, blockIDs.pole)
-    makeRows(10, 5, z + 2, blockIDs.pole)
-    makeRows(10, 5, z + 5, blockIDs.pole)
-    makeRows(10, 5, z + 9, blockIDs.pole)
-    makeRows(10, 5, z + 14, blockIDs.pole)
+
+    makeCross(20, 5, 1, 7, 1, blockIDs.pole)
+    makeCross(20, 5, 1, 10, 1, blockIDs.pole)
+    makeCross(20, 5, 1, 12, 1, blockIDs.pole)
+
+    makeCross(10, 39, 3, 12, 0, blockIDs.pole)
+    makeCross(10, 41, 3, 12, 0, blockIDs.pole)
+    makeCross(10, 12, 3, 39, 2, blockIDs.pole)
+    makeCross(10, 12, 3, 41, 2, blockIDs.pole)
+
+
+    var z = 4
+    makeRows(8, 5, z, blockIDs.shinyDirt)
 }
 
 function makeRows(length, x, z, block) {
     for (var i = 0; i < length; i++) {
         noa.setBlock(block, x + i, 1, z + i)
         noa.setBlock(block, length * 2 + x - i, 1, z + i)
+    }
+}
+function makeCross(length, x, y, z, axis, block) {
+    for (var i = 0; i < length; i++) {
+        var px = (axis === 0) ? x : x + i
+        var py = (axis === 1) ? y : y + i
+        var pz = (axis === 2) ? z : z + i
+        noa.setBlock(block, px, py, pz)
+        if (axis === 0) py = y + length - i
+        if (axis === 1) px = x + length - i
+        if (axis === 2) px = x + length - i
+        noa.setBlock(block, px, py, pz)
     }
 }
 

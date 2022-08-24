@@ -3,13 +3,10 @@
   "version": "0.33.0",
   "description": "Starter examples of game worlds using the noa voxel engine",
   "scripts": {
-    "start": "cd src/hello-world && webpack serve",
-    "test": "cd src/test && webpack serve",
-    "stress": "cd src/stress && webpack serve",
-    "build1": "rm -f docs/test/*.js*; cd src/test && webpack --env prod",
-    "build2": "rm -f docs/hello-world/*.js*; cd src/hello-world && webpack --env prod",
-    "build3": "rm -f docs/stress/*.js*; cd src/stress && webpack --env prod",
-    "build": "npm run build1 && npm run build2 && npm run build3"
+    "start": "node src/build.js hello-world serve",
+    "test": "node src/build.js test serve",
+    "stress": "node src/build.js stress serve",
+    "build": "node src/build.js test && node src/build.js hello-world && node src/build.js stress"
   },
   "keywords": [
     "noa-engine",
@@ -26,14 +23,12 @@
     "url": "https://github.com/fenomas/noa-examples.git"
   },
   "dependencies": {
-    "@babylonjs/core": "^5.14.1",
+    "@babylonjs/core": "^5.20.0",
     "babylonjs-inspector": "^5.14.1",
-    "noa-engine": "fenomas/noa#develop",
+    "noa-engine": "github:fenomas/noa#develop",
     "voxel-crunch": "^0.2.1"
   },
   "devDependencies": {
-    "webpack": "^5.64.3",
-    "webpack-cli": "^4.9.1",
-    "webpack-dev-server": "^4.5.0"
+    "esbuild": "^0.15.5"
   }
 }

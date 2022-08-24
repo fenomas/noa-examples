@@ -11,11 +11,8 @@
 
 
 
-// Engine options object, and engine instantiation:
+// Engine options object, and engine instantiation.
 import { Engine } from 'noa-engine'
-
-// or import from local filesystem when hacking locally:
-// import { Engine } from '../../../noa'
 
 
 var opts = {

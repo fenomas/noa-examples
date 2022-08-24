@@ -8,7 +8,7 @@
 */
 
 import { Engine } from 'noa-engine'
-// import { Engine } from '../../../noa'
+
 
 var noa = new Engine({
     debug: true,
@@ -68,8 +68,8 @@ noa.world.on('worldDataNeeded', (requestID, data, cx, cy, cz) => {
             var c = noise(x - z - 50, 120)
             ht += 2 * a + b + c
             var pillar = (Math.random() < 0.002) ? 5 : 0
-            var clo = 29 + 2 * (b - c)
-            var chi = 25 + 2 * (a - b)
+            var clo = 39 + 2 * (b - c)
+            var chi = 35 + 2 * (a - b)
             for (var j = 0; j < data.shape[1]; j++) {
                 var y = cy + j
                 var id = decideVoxel(x, y, z, ht, clo, chi, pillar)
@@ -141,6 +141,10 @@ window['setViewDistance'] = (blocks = 100) => {
 }
 
 
+// other tweaks
+var move = noa.entities.getMovement(noa.playerEntity)
+move.maxSpeed = 50
+move.moveForce = 60
 
 
 

@@ -1,4 +1,19 @@
 
+
+/**
+ * Webpack config included for handy reference.
+ * 
+ * To build:
+ *      npm i webpack webpack-cli
+ *      cd src/hello-world
+ *      webpack --env prod
+ * 
+ * and so forth.
+ */
+
+
+
+
 var path = require('path')
 var buildPath = path.resolve('..', '..', 'docs', 'hello-world')
 
@@ -26,8 +41,8 @@ module.exports = (env) => ({
 
     performance: {
         // change the default size warnings
-        maxEntrypointSize: 2.5e6,
-        maxAssetSize: 2.5e6,
+        maxEntrypointSize: 1.5e6,
+        maxAssetSize: 1.5e6,
     },
 
     stats: "minimal",

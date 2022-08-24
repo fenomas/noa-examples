@@ -5,11 +5,8 @@
  * 
 */
 
-// normally import from the module
+// Engine options object, and engine instantiation.
 import { Engine } from 'noa-engine'
-
-// or import from local filesystem when hacking locally:
-// import { Engine } from '../../../noa'
 
 
 // options and instantiation

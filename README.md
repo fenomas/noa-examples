@@ -28,13 +28,13 @@ To build and serve the examples locally:
 (clone this repo)
 cd noa-examples
 npm install
-npm start     # runs /src/hello-world
-npm test      # runs /src/test
+npm start     # serves the "hello-world" demo
+npm test      # serves the "test" demo
 ```
 
-The `start` and `test` scripts serve each world via `webpack-dev-server`, so you should be able to find them at `localhost:8080` or thereabouts.
+The `start` and `test` scripts build serve each world on `localhost:8080`.
 
-There's also a `build` script to generate bundles into the `docs` directories.
+There's also a `build` to generate all bundles into the `docs` directories, using `esbuild`. If you prefer `webpack`, here is a sample [webpack config](src/hello-world/webpack.config.js).
 
 Note: those using React may want to refer to [@MCArth/noa-cra-example](https://github.com/MCArth/noa-cra-example), which is a ported noa example built with `create-react-app`.
 
@@ -49,23 +49,23 @@ Note: those using React may want to refer to [@MCArth/noa-cra-example](https://g
 
 ### noa dependency:
 
-The `noa` engine is under active development. This module pulls in the latest release (`v0.31.0`), but if you want the lastest stable (probably!) version, change your dependency in `package.json` to:
+This engine is under active development. The current release is available from npm as `noa-engine`, but if you want the latest changes may want to change your `package.json` to point to the `#develop` branch on github:
 
 ```json
+  "dependencies": {
     "noa-engine": "github:fenomas/noa#develop",
+  },
 ```
 
-and you'll get the latest version of the #develop branch, where new feature work is done.
+Or, if you want to hack on both the engine and a game world together, it's easiest to clone the [noa](https://github.com/fenomas/noa) repo alongside to this one, and then edit `package.json` to reference your local copy of the engine:
 
-### When hacking on both a game and on the engine:
-
-If you want to hack on both the engine and a game world side-by-side, clone the `noa` repo next to your game client then import it directly:
-
-```js
-import { Engine } from '../../noa' // or wherever
+```json
+  "dependencies": {
+    "noa-engine": "file:../noa",
+  },
 ```
 
-This is preferable to editing your client's `package.json` or using `npm link`, as npm behaves weirdly when trying to resolve peer dependencies via path references or symlinks.
+Note that after changing `package.json` you'll need to run `npm i`.
 
 ----
 
