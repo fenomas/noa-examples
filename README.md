@@ -1,16 +1,17 @@
 
 # noa-examples
 
-Two small example worlds built on the [noa](https://github.com/fenomas/noa) voxel engine. The easiest way to get started with `noa` is to clone this repo and hack on these demos.
+Several small example worlds built on the [noa](https://github.com/fenomas/noa) voxel engine. The easiest way to get started with `noa` is to clone this repo and hack on these demos.
 
 Live demos:
  * [hello-world](https://fenomas.github.io/noa-examples/hello-world/) - a bare minimum world, suitable for building on top of
- * [testbed](https://fenomas.github.io/noa-examples/test/) - a testbed world that minimally implements most engine features
- * [stress test](https://fenomas.github.io/noa-examples/stress/) - a demo made to test longer view distances with more complicated terrain
+ * [testbed](https://fenomas.github.io/noa-examples/test/) - a testbed world that minimally implements most/all engine features
+ * [stress test](https://fenomas.github.io/noa-examples/stress/) - a demo made to test the performance of long view distances and crunchy terrain
 
-Interactions in the **"Testbed"** demo:
+The **"Testbed"** demo has the following key bindings:
  * `LMB`: break blocks
- * `RMB`/`R`: make blocks (pick block type with `MMB`/`Q`)
+ * `RMB`/`R`: make blocks
+ * `MMB`/`Q`: pick a block type to make
  * `I`: invert mouse
  * `P`: pause/unpause
  * `1`: shoot a physics projectile
@@ -25,18 +26,18 @@ Interactions in the **"Testbed"** demo:
 To build and serve the examples locally:
 
 ```sh
-(clone this repo)
+# (clone this repo)
 cd noa-examples
 npm install
 npm start     # serves the "hello-world" demo
 npm test      # serves the "test" demo
 ```
 
-The `start` and `test` scripts build serve each world on `localhost:8080`.
+The `start/test/stress` scripts build and serve each demo on `localhost:8080`.
 
-There's also a `build` to generate all bundles into the `docs` directories, using `esbuild`. If you prefer `webpack`, here is a sample [webpack config](src/hello-world/webpack.config.js).
+There's also a `build` script to generate all bundles into the `docs` directories, using `esbuild`. If you prefer `webpack`, the hello-world demo has a sample [webpack config](src/hello-world/webpack.config.js).
 
-Note: those using React may want to refer to [@MCArth/noa-cra-example](https://github.com/MCArth/noa-cra-example), which is a ported noa example built with `create-react-app`.
+Those using React may want to check [@MCArth/noa-cra-example](https://github.com/MCArth/noa-cra-example), which is a ported noa example built with `create-react-app`.
 
 
 ----
