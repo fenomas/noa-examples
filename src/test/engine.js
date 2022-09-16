@@ -18,7 +18,6 @@ export var noa = new Engine({
     chunkSize: 32,
     chunkAddDistance: [2, 1.5],     // [horiz, vert]
     blockTestDistance: 50,
-    texturePath: 'textures/',
     playerStart: [0.5, 5, 0.5],
     playerHeight: 1.4,
     playerWidth: 0.6,

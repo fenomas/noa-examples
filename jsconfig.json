@@ -1,6 +1,7 @@
 {
     "include": [
         "./**/*.js",
+        "./src/global.d.ts",
     ],
     "exclude": [
         "node_modules",

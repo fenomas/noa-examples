@@ -15,7 +15,6 @@ var noa = new Engine({
     showFPS: true,
     inverseY: true,
     chunkSize: 48,
-    texturePath: 'textures/',
     chunkAddDistance: [8.5, 6],
     playerStart: [0, 10, 0],
     playerAutoStep: true,
@@ -24,12 +23,13 @@ var noa = new Engine({
 
 
 // registration
-noa.registry.registerMaterial('grass', { textureURL: 'terrain_atlas.png', atlasIndex: 0 })
-noa.registry.registerMaterial('g_dirt', { textureURL: 'terrain_atlas.png', atlasIndex: 1 })
-noa.registry.registerMaterial('dirt', { textureURL: 'terrain_atlas.png', atlasIndex: 2 })
-noa.registry.registerMaterial('stone', { textureURL: 'terrain_atlas.png', atlasIndex: 3 })
-noa.registry.registerMaterial('stone2', { textureURL: 'terrain_atlas.png', atlasIndex: 4 })
-noa.registry.registerMaterial('cloud', { textureURL: 'terrain_atlas.png', atlasIndex: 5 })
+import atlasURL from '../textures/terrain_atlas.png'
+noa.registry.registerMaterial('grass', { textureURL: atlasURL, atlasIndex: 0 })
+noa.registry.registerMaterial('g_dirt', { textureURL: atlasURL, atlasIndex: 1 })
+noa.registry.registerMaterial('dirt', { textureURL: atlasURL, atlasIndex: 2 })
+noa.registry.registerMaterial('stone', { textureURL: atlasURL, atlasIndex: 3 })
+noa.registry.registerMaterial('stone2', { textureURL: atlasURL, atlasIndex: 4 })
+noa.registry.registerMaterial('cloud', { textureURL: atlasURL, atlasIndex: 5 })
 
 
 var id = 1

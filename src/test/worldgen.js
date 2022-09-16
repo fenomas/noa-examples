@@ -1,6 +1,8 @@
 
 import { noa } from './engine'
 import { blockIDs } from './registration'
+import { encode, decode } from 'voxel-crunch'
+
 
 
 /*
@@ -17,11 +19,11 @@ var WORLD1 = 'world1'
 var WORLD2 = 'world2'
 
 // storage for data from voxels that were unloaded
-var cruncher = require('voxel-crunch')
+
 var storage = {}
 var chunkIsStored = (id) => { return !!storage[id] }
-var storeChunk = (id, arr) => { storage[id] = cruncher.encode(arr.data) }
-var retrieveChunk = (id, arr) => { cruncher.decode(storage[id], arr.data) }
+var storeChunk = (id, arr) => { storage[id] = encode(arr.data) }
+var retrieveChunk = (id, arr) => { decode(storage[id], arr.data) }
 
 
 

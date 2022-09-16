@@ -1,21 +1,27 @@
 
 
 /**
- * Webpack config included for handy reference.
+ * Webpack config  -  this is not currently used, but is here as 
+ * a reference if you want it. It's not maintained and may need tweaks.
  * 
- * To build:
+ * Note that to use this config, you'll need to put a suitable `index.html` file
+ * in the build directory, with <script> tags for `bundle.js` and `babylon.js`.
+ *
+ *  
+ * Then to build:
  *      npm i webpack webpack-cli
  *      cd src/hello-world
  *      webpack --env prod
  * 
- * and so forth.
  */
 
 
 
 
 var path = require('path')
-var buildPath = path.resolve('..', '..', 'docs', 'hello-world')
+var buildPath = path.resolve('../../docs/hello-world')
+var entryPath = path.resolve('./index.js')
+var babylonPath = path.resolve('../../node_modules/@babylonjs')
 
 
 
@@ -23,19 +29,19 @@ module.exports = (env) => ({
 
     mode: (env && env.prod) ? 'production' : 'development',
 
-    entry: './index.js',
+    entry: entryPath,
     output: {
         path: buildPath,
         filename: 'bundle.js',
     },
 
     resolve: {
-        /* This resolve is necessary when importing noa-engine from the 
-         * local filesystem in order to hack on it. 
-         * (but it shouldn't break anything when importing noa normally)
-        */
         alias: {
-            '@babylonjs': path.resolve('../../node_modules/@babylonjs'),
+            /* This resolve is necessary when importing noa-engine from the 
+             * local filesystem in order to hack on it. 
+             * (but it shouldn't break anything when importing noa normally)
+            */
+            '@babylonjs': babylonPath,
         },
     },
 
