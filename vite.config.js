@@ -14,6 +14,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
     return {
 
         root: './src',
+        base: './',
 
         resolve: {
             extensions: ['.js'],
