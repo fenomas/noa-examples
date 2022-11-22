@@ -7,6 +7,8 @@ Live demos:
  * [hello-world](https://fenomas.github.io/noa-examples/hello-world/) - a bare minimum world, suitable for building on top of
  * [test](https://fenomas.github.io/noa-examples/test/) - a testbed world that minimally implements most engine features
 
+Note that the live demos are served from this repo's `#develop` branch, which uses the latest dev version of the voxel engine.
+
 Interactions in the "Test" demo:
  * `LMB`: break blocks
  * `RMB`/`R`: make blocks (pick block type with `MMB`/`Q`)
