@@ -26,6 +26,7 @@ var _id = 1
 import atlasURL from '../textures/terrain_atlas.png'
 import stoneURL from '../textures/stone.png'
 import transparentAtlas from '../textures/trans_atlas.png'
+import grassDecoURL from '../textures/grass_deco.png'
 
 import transparent1 from '../textures/t1.png'
 import transparent2 from '../textures/t2.png'
@@ -199,4 +200,29 @@ blockIDs.window = reg.registerBlock(_id++, {
     opaque: false,
 })
 
+
+
+
+// make a simple grass decoration block
+var grassMesh = (() => {
+    var testMat = noa.rendering.makeStandardMaterial('grass_deco_mat')
+    testMat.backFaceCulling = false
+    testMat.diffuseTexture = new Texture(grassDecoURL, scene, {
+        samplingMode: Texture.NEAREST_SAMPLINGMODE,
+        noMipmap: true,
+    })
+    testMat.diffuseTexture.hasAlpha = true
+    var plane = CreatePlane('grass_deco', {}, scene)
+    plane.material = testMat
+    return plane
+})()
+blockIDs.grassDeco = reg.registerBlock(_id++, {
+    blockMesh: grassMesh,
+    opaque: false,
+    solid: false,
+    onCustomMeshCreate: (mesh) => {
+        mesh.position.y = 0.47
+        mesh.rotation.y = Math.random() * 6.28
+    },
+})
 

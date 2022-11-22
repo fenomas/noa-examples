@@ -16,7 +16,7 @@ export var noa = new Engine({
     inverseY: true,
     inverseX: false,
     chunkSize: 32,
-    chunkAddDistance: [2, 1.5],     // [horiz, vert]
+    chunkAddDistance: [3, 2],     // [horiz, vert]
     blockTestDistance: 50,
     playerStart: [0.5, 5, 0.5],
     playerHeight: 1.4,

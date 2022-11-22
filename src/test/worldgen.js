@@ -56,21 +56,23 @@ noa.world.on('worldDataNeeded', function (id, array, x, y, z, worldName) {
 })
 
 setInterval(function () {
-    if (requestQueue.length === 0) return
-    var req = requestQueue.shift()
-    if (chunkIsStored(req.id)) {
-        retrieveChunk(req.id, req.array)
-    } else {
-        // skip out of generating very high or low chunks
-        if (req.y < -50 || req.y > 50) {
-            var fillVoxel = (req.y >= 0) ? 0 : blockIDs.stone
-            return noa.world.setChunkData(req.id, req.array, null, fillVoxel)
+    for (var i = 0; i < 10; i++) {
+        if (requestQueue.length === 0) return
+        var req = requestQueue.shift()
+        if (chunkIsStored(req.id)) {
+            retrieveChunk(req.id, req.array)
+        } else {
+            // skip out of generating very high or low chunks
+            if (req.y < -50 || req.y > 50) {
+                var fillVoxel = (req.y >= 0) ? 0 : blockIDs.stone
+                return noa.world.setChunkData(req.id, req.array, null, fillVoxel)
+            }
+            // real worldgen:
+            generateChunk(req.array, req.x, req.y, req.z, req.worldName)
         }
-        // real worldgen:
-        generateChunk(req.array, req.x, req.y, req.z, req.worldName)
+        // pass the finished data back to the game engine
+        noa.world.setChunkData(req.id, req.array)
     }
-    // pass the finished data back to the game engine
-    noa.world.setChunkData(req.id, req.array)
 }, 10)
 
 
@@ -148,7 +150,7 @@ function getCloudHt(x, z, xsize, zsize) {
 }
 
 function decideBlock(x, y, z, height) {
-    // flat area to NE
+    // flat area to north-east for testing
     if (x > 0 && z > 0) {
         var h = 1
         if (z == 40 || x == 40) h = 20
@@ -156,11 +158,16 @@ function decideBlock(x, y, z, height) {
         if (y < 0) return blockIDs.stone
         return blockIDs.green
     }
-    // general stuff
-    if (y < height) return (y < -2.2) ? blockIDs.stone :
-        (y < 0) ? blockIDs.dirt : blockIDs.grass
+    // general case
+    if (y < height) {
+        return (y < -2.2) ? blockIDs.stone :
+            (y < 0) ? blockIDs.dirt : blockIDs.grass
+    }
+    if (y < height + 1 && y > 0) {
+        var dens = (y < 1) ? 0.05 : (y < 2) ? 0.1 : 0.2
+        if (Math.random() < dens) return blockIDs.grassDeco
+    }
     if (y >= 0) return 0
-    // alternate by depth between two different water IDs
     return blockIDs.water
 }
 
