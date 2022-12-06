@@ -20,6 +20,7 @@ import { initRegistration } from './registration'
 import { initWorldGen } from './worldgen'
 import { setupPlayerEntity } from './entities'
 import { setupInteractions } from './actions'
+import { setupFog } from './fog'
 
 
 
@@ -57,4 +58,7 @@ setupPlayerEntity(noa)
 
 // does stuff on button presses
 setupInteractions(noa)
+
+//
+setupFog(noa)
 
