@@ -141,6 +141,9 @@ blockIDs.shinyDirt = reg.registerBlock(_id++, { material: 'shinyDirt' })
 
 // finally, you can register a custom Babylon mesh to represent a voxel
 var poleMesh = CreateBox('pole', {}, scene)
+var mat = noa.rendering.makeStandardMaterial()
+mat.diffuseColor.copyFromFloats(.6, .5, .4)
+poleMesh.material = mat
 var xform = Matrix.Scaling(0.2, 1, 0.2)
 xform.setTranslation(new Vector3(0, 0.5, 0))
 poleMesh.bakeTransformIntoVertices(xform)

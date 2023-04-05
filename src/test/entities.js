@@ -1,7 +1,7 @@
 
 import { Mesh } from '@babylonjs/core/Meshes/mesh'
-import '@babylonjs/core/Meshes/Builders/boxBuilder'
-import '@babylonjs/core/Meshes/Builders/sphereBuilder'
+import { CreateBox } from '@babylonjs/core/Meshes/Builders/boxBuilder'
+import { CreateSphere } from '@babylonjs/core/Meshes/Builders/sphereBuilder'
 
 import { noa } from './engine'
 
@@ -20,7 +20,8 @@ var w = dat.width
 var h = dat.height
 
 // make a Babylon.js mesh and scale it, etc.
-var playerMesh = Mesh.CreateBox('player', 1, noa.rendering.getScene())
+var playerMesh = CreateBox('player-mesh', {}, noa.rendering.getScene())
+playerMesh.material = noa.rendering.makeStandardMaterial()
 playerMesh.scaling.x = playerMesh.scaling.z = w
 playerMesh.scaling.y = h
 
@@ -41,7 +42,10 @@ export function shootBouncyBall(noa) {
     var radius = 0.2
 
     if (!ballMesh) {
-        ballMesh = Mesh.CreateSphere('ball', 6, 2 * radius, noa.rendering.getScene())
+        ballMesh = CreateSphere('ball', {
+            segments: 6,
+            diameter: 2 * radius,
+        }, noa.rendering.getScene())
     }
 
     // syntatic sugar for creating a default entity

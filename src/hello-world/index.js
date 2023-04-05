@@ -104,14 +104,16 @@ var w = dat.width
 var h = dat.height
 
 // add a mesh to represent the player, and scale it, etc.
-import { Mesh } from '@babylonjs/core/Meshes/mesh'
-import '@babylonjs/core/Meshes/Builders/boxBuilder'
+import { CreateBox } from '@babylonjs/core/Meshes/Builders/boxBuilder'
 
 var scene = noa.rendering.getScene()
-var mesh = Mesh.CreateBox('player-mesh', 1, scene)
+var mesh = CreateBox('player-mesh', {}, scene)
 mesh.scaling.x = w
 mesh.scaling.z = w
 mesh.scaling.y = h
+
+// this adds a default flat material, without specularity
+mesh.material = noa.rendering.makeStandardMaterial()
 
 
 // add "mesh" component to the player entity
@@ -123,7 +125,6 @@ noa.entities.addComponent(player, noa.entities.names.mesh, {
     // mesh registered at the center of the box
     offset: [0, h / 2, 0],
 })
-
 
 
 /*

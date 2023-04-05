@@ -189,11 +189,14 @@ function addWorldFeatures() {
 
     noa.setBlock(blockIDs.window, 12, 1, 6)
     noa.setBlock(blockIDs.stoneTrans, 14, 1, 6)
+    
+    noa.setBlock(blockIDs.shinyDirt, 12, 1, 10)
+    noa.setBlock(blockIDs.shinyDirt, 14, 1, 10)
+    noa.setBlock(blockIDs.shinyDirt, 16, 1, 10)
 
     noa.setBlock(blockIDs.waterPole, -18, -1, 15)
     noa.setBlock(blockIDs.waterPole, -16, -1, 15)
     noa.setBlock(blockIDs.waterPole, -14, -1, 15)
-
 
     makeCross(20, 5, 1, 7, 1, blockIDs.pole)
     makeCross(20, 5, 1, 10, 1, blockIDs.pole)
@@ -203,18 +206,8 @@ function addWorldFeatures() {
     makeCross(10, 41, 3, 12, 0, blockIDs.pole)
     makeCross(10, 12, 3, 39, 2, blockIDs.pole)
     makeCross(10, 12, 3, 41, 2, blockIDs.pole)
-
-
-    var z = 4
-    makeRows(8, 5, z, blockIDs.shinyDirt)
 }
 
-function makeRows(length, x, z, block) {
-    for (var i = 0; i < length; i++) {
-        noa.setBlock(block, x + i, 1, z + i)
-        noa.setBlock(block, length * 2 + x - i, 1, z + i)
-    }
-}
 function makeCross(length, x, y, z, axis, block) {
     for (var i = 0; i < length; i++) {
         var px = (axis === 0) ? x : x + i

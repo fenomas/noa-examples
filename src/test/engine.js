@@ -29,4 +29,7 @@ export var noa = new Engine({
     originRebaseDistance: 25,
 })
 
-
+// setup view for convenient testing
+noa.camera.zoomDistance = 10
+noa.camera.pitch = 0.3
+noa.camera.heading = 0.3

@@ -141,6 +141,19 @@ window['setViewDistance'] = (blocks = 100) => {
 }
 
 
+// player mesh
+import { CreateBox } from '@babylonjs/core/Meshes/Builders/boxBuilder'
+var mesh = CreateBox('player-mesh', {}, noa.rendering.getScene())
+var dat = noa.entities.getPositionData(noa.playerEntity)
+mesh.scaling.x = mesh.scaling.z = dat.width
+mesh.scaling.y = dat.height
+mesh.material = noa.rendering.makeStandardMaterial()
+noa.entities.addComponent(noa.playerEntity, noa.entities.names.mesh, {
+    mesh: mesh,
+    offset: [0, dat.height / 2, 0],
+})
+
+
 // other tweaks
 var move = noa.entities.getMovement(noa.playerEntity)
 move.maxSpeed = 50
