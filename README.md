@@ -8,17 +8,6 @@ Live demos:
  * [testbed](https://fenomas.github.io/noa-examples/test/) - a testbed world that minimally implements most/all engine features
  * [stress test](https://fenomas.github.io/noa-examples/stress/) - a demo made to test the performance of long view distances and crunchy terrain
 
-The **"Testbed"** demo has the following key bindings:
- * `LMB`: break blocks
- * `RMB`/`R`: make blocks
- * `MMB`/`Q`: pick a block type to make
- * `I`: invert mouse
- * `P`: pause/unpause
- * `1`: shoot a physics projectile
- * `3`: toggle timescale (between `1`, `0.1`, `2`)
- * `O`: swap between two sets of world data
- * `mousewheel`: zoom camera in and out
-
 ----
 
 ## Usage
@@ -29,13 +18,13 @@ To build and serve the examples locally:
 # (clone this repo)
 cd noa-examples
 npm install
-npm start     # serves the "hello-world" demo
-npm test      # serves the "test" demo
+npm test      # serves demos on localhost:8080
+npm start     # serves demos in prod mode
 ```
 
-The `start/test/stress` scripts build and serve each demo on `localhost:8080`.
+Then open `localhost:8080` to view the three demos.
 
-There's also a `build` script to generate all bundles into the `docs` directories, using `esbuild`. If you prefer `webpack`, the hello-world demo has a sample [webpack config](src/hello-world/webpack.config.js).
+There's also a `build` script to generate all bundles into the `docs` directories, using `vite`. If you prefer `webpack`, the hello-world demo has a sample [webpack config](src/hello-world/webpack.config.js).
 
 Those using React may want to check [@MCArth/noa-cra-example](https://github.com/MCArth/noa-cra-example), which is a ported noa example built with `create-react-app`.
 

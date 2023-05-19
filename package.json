@@ -22,9 +22,9 @@
     "url": "https://github.com/fenomas/noa-examples.git"
   },
   "dependencies": {
-    "@babylonjs/core": "^5.20.0",
+    "@babylonjs/core": "^6.1.0",
     "babylonjs-inspector": "^5.14.1",
-    "noa-engine": "file:../noa",
+    "noa-engine": "^0.33.0",
     "voxel-crunch": "^0.2.1"
   },
   "devDependencies": {

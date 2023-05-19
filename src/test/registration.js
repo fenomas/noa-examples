@@ -45,7 +45,7 @@ import imagec from '../textures/c.png'
 
 // blocks that just have a color, with no texture
 reg.registerMaterial('greenish', { color: [0.2, 0.5, 0.2] })
-reg.registerMaterial('cloud', { color: [0.9, 0.9, 0.92] })
+reg.registerMaterial('cloud', { color: [0.9, 0.9, 0.92, 0.8] })
 
 blockIDs.green = reg.registerBlock(_id++, { material: 'greenish' })
 blockIDs.cloud = reg.registerBlock(_id++, { material: 'cloud' })
@@ -142,12 +142,11 @@ blockIDs.shinyDirt = reg.registerBlock(_id++, { material: 'shinyDirt' })
 // finally, you can register a custom Babylon mesh to represent a voxel
 var poleMesh = CreateBox('pole', {}, scene)
 var mat = noa.rendering.makeStandardMaterial()
-mat.diffuseColor.copyFromFloats(.6, .5, .4)
+mat.diffuseColor.set(.7, .7, .7)
 poleMesh.material = mat
 var xform = Matrix.Scaling(0.2, 1, 0.2)
 xform.setTranslation(new Vector3(0, 0.5, 0))
 poleMesh.bakeTransformIntoVertices(xform)
-scene.removeMesh(poleMesh)
 blockIDs.pole = reg.registerBlock(_id++, {
     blockMesh: poleMesh,
     opaque: false,
@@ -170,18 +169,19 @@ blockIDs.waterPole = reg.registerBlock(_id++, {
 
 // Another custom block to test custom meshes with transparent textures
 var make = (texURL) => {
-    var testMat = noa.rendering.makeStandardMaterial('voxel_trans')
-    testMat.backFaceCulling = false
-    testMat.diffuseTexture = new Texture(texURL)
-    testMat.diffuseTexture.hasAlpha = true
+    var planeMat = noa.rendering.makeStandardMaterial('voxel_trans')
+    planeMat.diffuseTexture = new Texture(texURL)
+    planeMat.diffuseTexture.hasAlpha = true
 
-    var testMesh = CreatePlane('cross', {}, scene)
-    testMesh.material = testMat
-    testMesh.rotation.y += Math.PI / 4
-    testMesh.bakeTransformIntoVertices(Matrix.Translation(0, 0.5, 0))
-    var clone = testMesh.clone()
+    var plane = CreatePlane('transparent_block', {
+        sideOrientation: Mesh.DOUBLESIDE,
+    }, scene)
+    plane.material = planeMat
+    plane.rotation.y += Math.PI / 4
+    plane.bakeTransformIntoVertices(Matrix.Translation(0, 0.5, 0))
+    var clone = plane.clone()
     clone.rotation.y += Math.PI / 2
-    var result = Mesh.MergeMeshes([testMesh, clone], true)
+    var result = Mesh.MergeMeshes([plane, clone], true)
     return result
 }
 blockIDs.custom1 = reg.registerBlock(_id++, { blockMesh: make(transparent1), opaque: false, })
@@ -209,13 +209,15 @@ blockIDs.window = reg.registerBlock(_id++, {
 // make a simple grass decoration block
 var grassMesh = (() => {
     var testMat = noa.rendering.makeStandardMaterial('grass_deco_mat')
-    testMat.backFaceCulling = false
     testMat.diffuseTexture = new Texture(grassDecoURL, scene, {
         samplingMode: Texture.NEAREST_SAMPLINGMODE,
         noMipmap: true,
     })
+    testMat.emissiveColor.set(0.3, 0.3, 0.3)
     testMat.diffuseTexture.hasAlpha = true
-    var plane = CreatePlane('grass_deco', {}, scene)
+    var plane = CreatePlane('grass_deco', {
+        sideOrientation: Mesh.DOUBLESIDE,
+    }, scene)
     plane.material = testMat
     return plane
 })()

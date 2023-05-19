@@ -1,10 +1,9 @@
 
-import { Mesh } from '@babylonjs/core/Meshes/mesh'
 import { CreateBox } from '@babylonjs/core/Meshes/Builders/boxBuilder'
 import { CreateSphere } from '@babylonjs/core/Meshes/Builders/sphereBuilder'
 
 import { noa } from './engine'
-
+import { setMeshShadows } from './shadows'
 
 
 /*
@@ -33,6 +32,9 @@ noa.entities.addComponent(eid, noa.entities.names.mesh, {
     mesh: playerMesh,
     offset: offset
 })
+setMeshShadows(playerMesh, true)
+
+
 
 
 
@@ -46,6 +48,7 @@ export function shootBouncyBall(noa) {
             segments: 6,
             diameter: 2 * radius,
         }, noa.rendering.getScene())
+        ballMesh.material = noa.rendering.makeStandardMaterial()
     }
 
     // syntatic sugar for creating a default entity
@@ -57,7 +60,7 @@ export function shootBouncyBall(noa) {
     var mesh = ballMesh.createInstance('ball_instance')
     var meshOffset = [0, radius, 0]
     var doPhysics = true
-    var shadow = true
+    var shadow = false
 
     var id = noa.entities.add(
         pos, width, height, // required
@@ -104,6 +107,9 @@ export function shootBouncyBall(noa) {
         }
     })
     ents.addComponent(id, removeComp)
+
+    // add shadows to new mesh    
+    setMeshShadows(mesh, true)
 }
 
 var ballMesh

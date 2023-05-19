@@ -92,13 +92,17 @@ function generateChunk(array, x, y, z, worldName) {
 }
 
 function generateChunk1(array, cx, cy, cz) {
-    for (var i = 0; i < array.shape[0]; ++i) {
+    var size = array.shape[0]
+    if (cy === 0) {
+        for (var q = 0; q < size; ++q) array.set(q, 20, 2, 3)
+    }
+    for (var i = 0; i < size; ++i) {
         var x = cx + i
-        for (var k = 0; k < array.shape[2]; ++k) {
+        for (var k = 0; k < size; ++k) {
             var z = cz + k
             var height = getHeightMap(x, z, 18, 22)
             height += getHeightMap(x, z + 50, 9, 6) / 2
-            for (var j = 0; j < array.shape[1]; ++j) {
+            for (var j = 0; j < size; ++j) {
                 var b = decideBlock(x, cy + j, z, height)
                 if (b) array.set(i, j, k, b)
             }
@@ -106,7 +110,7 @@ function generateChunk1(array, cx, cy, cz) {
             if (cloudHt > 0) {
                 var cmin = cloudHt - 2 * Math.sin(x / 17)
                 var cmax = cloudHt + 3 * Math.sin(z / 22)
-                for (j = 0; j < array.shape[1]; ++j) {
+                for (j = 0; j < size; ++j) {
                     if (cy + j < cmin || cy + j > cmax) continue
                     array.set(i, j, k, blockIDs.cloud)
                 }
@@ -179,20 +183,18 @@ function decideBlock(x, y, z, height) {
 
 setTimeout(function () {
     addWorldFeatures()
-}, 1000)
+}, 500)
 
 function addWorldFeatures() {
-    noa.setBlock(blockIDs.abc2, -7, 4, 3)
-    noa.setBlock(blockIDs.transparent, -6, 4, 5)
-    noa.setBlock(blockIDs.custom1, -5, 4, 7)
-    noa.setBlock(blockIDs.custom2, -4, 4, 9)
+    makeColumn(2, -6, 0, 11, blockIDs.abc2)
+    makeColumn(2, -5, 0, 13, blockIDs.transparent)
+    makeColumn(2, -4, 0, 15, blockIDs.custom1)
+    makeColumn(2, -3, 0, 17, blockIDs.custom2)
 
-    noa.setBlock(blockIDs.window, 12, 1, 6)
-    noa.setBlock(blockIDs.stoneTrans, 14, 1, 6)
-    
-    noa.setBlock(blockIDs.shinyDirt, 12, 1, 10)
-    noa.setBlock(blockIDs.shinyDirt, 14, 1, 10)
-    noa.setBlock(blockIDs.shinyDirt, 16, 1, 10)
+    noa.setBlock(blockIDs.stoneTrans, 12, 1, 6)
+    noa.setBlock(blockIDs.window, 14, 1, 6)
+
+    makeColumn(2, 14, 1, 10, blockIDs.shinyDirt)
 
     noa.setBlock(blockIDs.waterPole, -18, -1, 15)
     noa.setBlock(blockIDs.waterPole, -16, -1, 15)
@@ -206,6 +208,12 @@ function addWorldFeatures() {
     makeCross(10, 41, 3, 12, 0, blockIDs.pole)
     makeCross(10, 12, 3, 39, 2, blockIDs.pole)
     makeCross(10, 12, 3, 41, 2, blockIDs.pole)
+}
+
+function makeColumn(ht, x, y, z, block) {
+    for (var i = 0; i < ht; i++) {
+        noa.setBlock(block, x, y + i, z)
+    }
 }
 
 function makeCross(length, x, y, z, axis, block) {

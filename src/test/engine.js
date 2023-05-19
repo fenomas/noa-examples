@@ -22,11 +22,13 @@ export var noa = new Engine({
     playerHeight: 1.4,
     playerWidth: 0.6,
     playerAutoStep: true,
+    playerShadowComponent: false,
     useAO: true,
     AOmultipliers: [0.92, 0.8, 0.5],
     reverseAOmultiplier: 1.0,
     manuallyControlChunkLoading: false,
-    originRebaseDistance: 25,
+    originRebaseDistance: 10,
+    lightVector: [0.6, -1, -0.4],
 })
 
 // setup view for convenient testing
