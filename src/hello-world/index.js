@@ -11,11 +11,8 @@
 
 
 
-// Engine options object, and engine instantiation:
+// Engine options object, and engine instantiation.
 import { Engine } from 'noa-engine'
-
-// or import from local filesystem when hacking locally:
-// import { Engine } from '../../../noa'
 
 
 var opts = {
@@ -41,11 +38,11 @@ var noa = new Engine(opts)
 */
 
 // block materials (just colors for this demo)
-var textureURL = null // replace that with a filename to specify textures
 var brownish = [0.45, 0.36, 0.22]
 var greenish = [0.1, 0.8, 0.2]
-noa.registry.registerMaterial('dirt', brownish, textureURL)
-noa.registry.registerMaterial('grass', greenish, textureURL)
+noa.registry.registerMaterial('dirt', { color: brownish })
+noa.registry.registerMaterial('grass', { color: greenish })
+
 
 // block types and their material names
 var dirtID = noa.registry.registerBlock(1, { material: 'dirt' })
@@ -107,14 +104,16 @@ var w = dat.width
 var h = dat.height
 
 // add a mesh to represent the player, and scale it, etc.
-import { Mesh } from '@babylonjs/core/Meshes/mesh'
-import '@babylonjs/core/Meshes/Builders/boxBuilder'
+import { CreateBox } from '@babylonjs/core/Meshes/Builders/boxBuilder'
 
 var scene = noa.rendering.getScene()
-var mesh = Mesh.CreateBox('player-mesh', 1, scene)
+var mesh = CreateBox('player-mesh', {}, scene)
 mesh.scaling.x = w
 mesh.scaling.z = w
 mesh.scaling.y = h
+
+// this adds a default flat material, without specularity
+mesh.material = noa.rendering.makeStandardMaterial()
 
 
 // add "mesh" component to the player entity
@@ -126,7 +125,6 @@ noa.entities.addComponent(player, noa.entities.names.mesh, {
     // mesh registered at the center of the box
     offset: [0, h / 2, 0],
 })
-
 
 
 /*
@@ -152,12 +150,12 @@ noa.inputs.down.on('alt-fire', function () {
 })
 
 // add a key binding for "E" to do the same as alt-fire
-noa.inputs.bind('alt-fire', 'E')
+noa.inputs.bind('alt-fire', 'KeyE')
 
 
 // each tick, consume any scroll events and use them to zoom camera
 noa.on('tick', function (dt) {
-    var scroll = noa.inputs.state.scrolly
+    var scroll = noa.inputs.pointerState.scrolly
     if (scroll !== 0) {
         noa.camera.zoomDistance += (scroll > 0) ? 1 : -1
         if (noa.camera.zoomDistance < 0) noa.camera.zoomDistance = 0

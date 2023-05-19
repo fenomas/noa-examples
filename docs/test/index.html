@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>noa-examples: test</title>
+  <title>noa-examples: testbed</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <style type="text/css">
@@ -10,9 +10,6 @@
       background-color: white;
       margin: 0px;
       overflow: hidden;
-      -moz-user-select: none;
-      -webkit-user-select: none;
-      -ms-user-select: none;
     }
 
     #reticle {
@@ -24,17 +21,45 @@
       line-height: 20px;
       margin: -10px 0 0 -10px;
       z-index: 99;
-      color: white;
+      color: #eee;
       text-shadow: 1px 1px 0px black;
       text-align: center;
     }
+
+    #usage {
+      position: relative;
+      z-index: 100;
+      color: #eee;
+      font-family: sans-serif;
+      text-shadow: 1px 1px 0px black;
+      background-color: #0005;
+      margin: 5px;
+      padding: 5px;
+      width: fit-content;
+    }
   </style>
+  <script type="module" crossorigin src="../assets/test.29694d9d.js"></script>
+  <link rel="modulepreload" crossorigin href="../assets/babylon.39bd9ef3.js">
+  <link rel="modulepreload" crossorigin href="../assets/index.2b3d1184.js">
+  <link rel="modulepreload" crossorigin href="../assets/terrain_atlas.162877cc.js">
 </head>
 
 <body>
   <div id="reticle">+</div>
-  <script type="text/javascript" src="babylon.js"></script>
-  <script type="text/javascript" src="bundle.js"></script>
+  <div id="usage">
+    move: WASD
+    <br> LMB: break
+    <br> MMB/Q: pick
+    <br> RMB/R: place
+    <br> scroll: zoom
+    <br> 1: launch entity
+    <br> 3: toggle timescale
+    <br> P: pause
+    <br> I: invert mouse
+    <br> O: toggle world data
+  </div>
+  
+
 </body>
 
 </html>

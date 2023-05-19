@@ -1,0 +1,29 @@
+{
+    "include": [
+        "./**/*.js",
+        "./src/global.d.ts",
+    ],
+    "exclude": [
+        "node_modules",
+    ],
+    "compilerOptions": {
+        "checkJs": true,
+        "resolveJsonModule": true,
+        "noEmit": true,
+        "target": "es5",
+        "lib": [
+            "es5",
+            "DOM",
+            "DOM.Iterable",
+            "ES2018"
+        ],
+        "typeRoots": [
+            "./types", // without this vscode will prefer auto-acquired types
+        ],
+        "paths": {
+            "SRC/*": [
+                "./src/*"
+            ],
+        }
+    },
+}

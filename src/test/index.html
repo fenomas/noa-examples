@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+  <title>noa-examples: testbed</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <style type="text/css">
+    body {
+      background-color: white;
+      margin: 0px;
+      overflow: hidden;
+    }
+
+    #reticle {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      line-height: 20px;
+      margin: -10px 0 0 -10px;
+      z-index: 99;
+      color: #eee;
+      text-shadow: 1px 1px 0px black;
+      text-align: center;
+    }
+
+    #usage {
+      position: relative;
+      z-index: 100;
+      color: #eee;
+      font-family: sans-serif;
+      text-shadow: 1px 1px 0px black;
+      background-color: #0005;
+      margin: 5px;
+      padding: 5px;
+      width: fit-content;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="reticle">+</div>
+  <div id="usage">
+    move: WASD
+    <br> LMB: break
+    <br> MMB/Q: pick
+    <br> RMB/R: place
+    <br> scroll: zoom
+    <br> 1: launch entity
+    <br> 3: toggle timescale
+    <br> P: pause
+    <br> I: invert mouse
+    <br> O: toggle world data
+  </div>
+  <script type="module" src="./index.js"></script>
+
+</body>
+
+</html>

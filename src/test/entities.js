@@ -1,8 +1,9 @@
 
+import { CreateBox } from '@babylonjs/core/Meshes/Builders/boxBuilder'
+import { CreateSphere } from '@babylonjs/core/Meshes/Builders/sphereBuilder'
 
-import { Mesh } from '@babylonjs/core/Meshes/mesh'
-import '@babylonjs/core/Meshes/Builders/boxBuilder'
-import '@babylonjs/core/Meshes/Builders/sphereBuilder'
+import { noa } from './engine'
+import { setMeshShadows } from './shadows'
 
 
 /*
@@ -11,28 +12,30 @@ import '@babylonjs/core/Meshes/Builders/sphereBuilder'
  * 
 */
 
+// get the player entity's ID and other info (aabb, size)
+var eid = noa.playerEntity
+var dat = noa.entities.getPositionData(eid)
+var w = dat.width
+var h = dat.height
 
-export function setupPlayerEntity(noa) {
-    // get the player entity's ID and other info (aabb, size)
-    var eid = noa.playerEntity
-    var dat = noa.entities.getPositionData(eid)
-    var w = dat.width
-    var h = dat.height
+// make a Babylon.js mesh and scale it, etc.
+var playerMesh = CreateBox('player-mesh', {}, noa.rendering.getScene())
+playerMesh.material = noa.rendering.makeStandardMaterial()
+playerMesh.scaling.x = playerMesh.scaling.z = w
+playerMesh.scaling.y = h
 
-    // make a Babylon.js mesh and scale it, etc.
-    var playerMesh = Mesh.CreateBox('player', 1, noa.rendering.getScene())
-    playerMesh.scaling.x = playerMesh.scaling.z = w
-    playerMesh.scaling.y = h
+// offset of mesh relative to the entity's "position" (center of its feet)
+var offset = [0, h / 2, 0]
 
-    // offset of mesh relative to the entity's "position" (center of its feet)
-    var offset = [0, h / 2, 0]
+// a "mesh" component to the player entity
+noa.entities.addComponent(eid, noa.entities.names.mesh, {
+    mesh: playerMesh,
+    offset: offset
+})
+setMeshShadows(playerMesh, true)
 
-    // a "mesh" component to the player entity
-    noa.entities.addComponent(eid, noa.entities.names.mesh, {
-        mesh: playerMesh,
-        offset: offset
-    })
-}
+
+
 
 
 
@@ -41,7 +44,11 @@ export function shootBouncyBall(noa) {
     var radius = 0.2
 
     if (!ballMesh) {
-        ballMesh = Mesh.CreateSphere('ball', 6, 2 * radius, noa.rendering.getScene())
+        ballMesh = CreateSphere('ball', {
+            segments: 6,
+            diameter: 2 * radius,
+        }, noa.rendering.getScene())
+        ballMesh.material = noa.rendering.makeStandardMaterial()
     }
 
     // syntatic sugar for creating a default entity
@@ -53,7 +60,7 @@ export function shootBouncyBall(noa) {
     var mesh = ballMesh.createInstance('ball_instance')
     var meshOffset = [0, radius, 0]
     var doPhysics = true
-    var shadow = true
+    var shadow = false
 
     var id = noa.entities.add(
         pos, width, height, // required
@@ -101,9 +108,10 @@ export function shootBouncyBall(noa) {
     })
     ents.addComponent(id, removeComp)
 
+    // add shadows to new mesh    
+    setMeshShadows(mesh, true)
 }
 
 var ballMesh
 var collideHandler
 var removeComp
-
